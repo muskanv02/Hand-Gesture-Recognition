@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GestureAI | Hand Gesture Recognition</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            Gesture<span>AI</span>
+        </div>
+
+        <div class="sidebar-menu">
+
+            <a href="/" class="active">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+
+            <a href="/recognition">
+                <i class="fa-solid fa-camera"></i>
+                <span>Live Recognition</span>
+            </a>
+
+            <a href="/how-it-works">
+                <i class="fa-solid fa-microchip"></i>
+                <span>AI Technology</span>
+            </a>
+
+            <a href="/analytics">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/about">
+                <i class="fa-solid fa-user"></i>
+                <span>About</span>
+            </a>
+
+            <a href="/contact">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+            <i class="fa-solid fa-brain"></i>
+            AI Gesture Recognition
+            <br>
+            Powered by MediaPipe
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="dashboard-main">
+
+        <div class="home-hero">
+
+            <div class="home-content">
+
+                <div class="home-tag">
+                    AI POWERED HAND RECOGNITION
+                </div>
+
+                <h1>
+                    Turn Your Hand
+                    <span>Gestures</span>
+                    Into Actions
+                </h1>
+
+                <p>
+                    GestureAI is an intelligent hand gesture recognition
+                    system that uses computer vision and machine learning
+                    to identify hand gestures in real time.
+                </p>
+
+                <div class="home-buttons">
+
+                    <a href="/recognition" class="btn">
+                        <i class="fa-solid fa-camera"></i>
+                        Start Recognition
+                    </a>
+
+                    <a href="/how-it-works" class="btn-outline">
+                        Explore Technology
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="home-visual">
+
+                <div class="home-hand">
+                    🖐️
+                </div>
+
+                <div class="ai-circle">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+
+                <div class="visual-label">
+                    <i class="fa-solid fa-circle"></i>
+                    AI Ready
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FEATURES -->
+
+        <div class="home-section-title">
+            <span>WHAT WE OFFER</span>
+            <h2>Smart Recognition Experience</h2>
+        </div>
+
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+
+                <h3>Real-Time Detection</h3>
+
+                <p>
+                    Detect hand gestures instantly through
+                    your device camera.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+
+                <h3>Machine Learning</h3>
+
+                <p>
+                    A trained machine learning model classifies
+                    different hand gestures.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-hand"></i>
+                </div>
+
+                <h3>Multiple Gestures</h3>
+
+                <p>
+                    Recognize gestures such as Peace, Fist,
+                    Thumbs Up, OK and more.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-footer">
+            © 2026 GestureAI • Hand Gesture Recognition System
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
+

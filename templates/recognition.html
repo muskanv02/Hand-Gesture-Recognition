@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Live Recognition | GestureAI</title>
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- Main CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-logo">
+
+            Gesture<span>AI</span>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+
+            <a href="/">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>Home</span>
+
+            </a>
+
+
+            <a href="/recognition"
+               class="active">
+
+                <i class="fa-solid fa-camera"></i>
+
+                <span>Live Recognition</span>
+
+            </a>
+
+
+            <a href="/how-it-works">
+
+                <i class="fa-solid fa-microchip"></i>
+
+                <span>AI Technology</span>
+
+            </a>
+
+
+            <a href="/analytics">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span>Analytics</span>
+
+            </a>
+
+
+            <a href="/about">
+
+                <i class="fa-solid fa-user"></i>
+
+                <span>About</span>
+
+            </a>
+
+
+            <a href="/contact">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                <span>Contact</span>
+
+            </a>
+
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div>
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                AI Gesture Recognition
+
+            </div>
+
+
+            <div>
+
+                Powered by MediaPipe
+
+            </div>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <main class="dashboard-main">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="inner-page-header">
+
+            <div class="page-label">
+                LIVE CAMERA
+            </div>
+
+
+            <h1>
+
+                Live Gesture
+
+                <span>Recognition</span>
+
+            </h1>
+
+
+            <p>
+
+                Show your hand clearly in front of the camera.
+                GestureAI will detect your hand gesture in real
+                time using computer vision and machine learning.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             STATUS
+        ================================================== -->
+
+        <div class="status-row">
+
+
+            <span id="mpStatus">
+
+                <i class="fa-solid fa-circle"></i>
+
+                MediaPipe Checking...
+
+            </span>
+
+
+            <span id="modelStatus">
+
+                <i class="fa-solid fa-circle"></i>
+
+                Model Checking...
+
+            </span>
+
+
+            <span id="cameraStatus">
+
+                <i class="fa-solid fa-circle"></i>
+
+                Camera Checking...
+
+            </span>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECOGNITION AREA
+        ================================================== -->
+
+        <div class="recognition-layout">
+
+
+            <!-- CAMERA -->
+
+            <div class="camera-card">
+
+
+                <div class="camera-header">
+
+
+                    <h2>
+
+                        <i class="fa-solid fa-video"></i>
+
+                        Live Camera Feed
+
+                    </h2>
+
+
+                    <div class="camera-status">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                        Camera Active
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="video-wrap">
+
+                    <img
+                        src="{{ url_for('video_feed') }}"
+                        alt="Live camera feed"
+                    >
+
+                </div>
+
+
+                <div class="hint">
+
+                    <i class="fa-regular fa-lightbulb"></i>
+
+                    Place one hand inside the frame
+                    • Good lighting gives better results
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT SIDE
+            ================================================== -->
+
+            <div class="recognition-side">
+
+
+                <!-- DETECTED GESTURE -->
+
+                <div class="gesture-card">
+
+
+                    <div class="gesture-card-label">
+
+                        DETECTED GESTURE
+
+                    </div>
+
+
+                    <div
+                        class="gesture-icon"
+                        id="gestureIcon"
+                    >
+
+                        🤚
+
+                    </div>
+
+
+                    <div
+                        class="gesture-name"
+                        id="gestureName"
+                    >
+
+                        No Hand
+
+                    </div>
+
+
+                    <div
+                        class="gesture-description"
+                        id="gestureDescription"
+                    >
+
+                        Waiting for gesture...
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- TIPS -->
+
+                <div class="tips-card">
+
+
+                    <h3>
+
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                        Recognition Tips
+
+                    </h3>
+
+
+                    <div class="tip">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        <span>
+                            Keep your complete hand visible
+                            inside the camera frame.
+                        </span>
+
+                    </div>
+
+
+                    <div class="tip">
+
+                        <i class="fa-solid fa-sun"></i>
+
+                        <span>
+                            Use good lighting for accurate
+                            gesture detection.
+                        </span>
+
+                    </div>
+
+
+                    <div class="tip">
+
+                        <i class="fa-solid fa-hand"></i>
+
+                        <span>
+                            Keep only one hand in front
+                            of the camera.
+                        </span>
+
+                    </div>
+
+
+                    <div class="tip">
+
+                        <i class="fa-solid fa-arrows-to-circle"></i>
+
+                        <span>
+                            Keep your hand steady while
+                            making a gesture.
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="dashboard-footer">
+
+            © 2026 GestureAI • AI Powered Hand Gesture Recognition
+
+        </footer>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+
+/* =====================================================
+   STATUS CHECK
+===================================================== */
+
+async function checkStatus() {
+
+    try {
+
+        const response =
+            await fetch("/status");
+
+        const data =
+            await response.json();
+
+
+        const mp =
+            document.getElementById("mpStatus");
+
+        const model =
+            document.getElementById("modelStatus");
+
+        const camera =
+            document.getElementById("cameraStatus");
+
+
+        if (data.mediapipe) {
+
+            mp.innerHTML =
+                '<i class="fa-solid fa-circle"></i> MediaPipe Ready';
+
+        } else {
+
+            mp.innerHTML =
+                '<i class="fa-solid fa-circle"></i> MediaPipe Error';
+
+        }
+
+
+        if (data.model_loaded) {
+
+            model.innerHTML =
+                '<i class="fa-solid fa-circle"></i> Model Ready';
+
+        } else {
+
+            model.innerHTML =
+                '<i class="fa-solid fa-circle"></i> Model Not Loaded';
+
+        }
+
+
+        if (data.camera) {
+
+            camera.innerHTML =
+                '<i class="fa-solid fa-circle"></i> Camera Ready';
+
+        } else {
+
+            camera.innerHTML =
+                '<i class="fa-solid fa-circle"></i> Camera Error';
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.log("Status Error:", error);
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LIVE GESTURE UPDATE
+===================================================== */
+
+async function updateGesture() {
+
+    try {
+
+        const response =
+            await fetch("/prediction");
+
+
+        const data =
+            await response.json();
+
+
+        const icon =
+            document.getElementById("gestureIcon");
+
+
+        const name =
+            document.getElementById("gestureName");
+
+
+        const description =
+            document.getElementById("gestureDescription");
+
+
+        icon.textContent =
+            data.emoji || "🤚";
+
+
+        name.textContent =
+            data.label || "No Hand";
+
+
+        if (data.label === "No Hand") {
+
+            description.textContent =
+                "Waiting for gesture...";
+
+        }
+
+        else if (data.label === "Detection Error") {
+
+            description.textContent =
+                "Unable to recognize gesture";
+
+        }
+
+        else {
+
+            description.textContent =
+                "Gesture detected successfully";
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Prediction Error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   START
+===================================================== */
+
+checkStatus();
+
+updateGesture();
+
+
+/* Status every 3 seconds */
+
+setInterval(
+    checkStatus,
+    3000
+);
+
+
+/* Gesture every 200ms */
+
+setInterval(
+    updateGesture,
+    200
+);
+
+
+</script>
+
+
+</body>
+
+</html>

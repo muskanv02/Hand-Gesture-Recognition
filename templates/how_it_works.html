@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Technology | GestureAI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            Gesture<span>AI</span>
+        </div>
+
+        <div class="sidebar-menu">
+
+            <a href="/">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+
+            <a href="/recognition">
+                <i class="fa-solid fa-camera"></i>
+                <span>Live Recognition</span>
+            </a>
+
+            <a href="/how-it-works" class="active">
+                <i class="fa-solid fa-microchip"></i>
+                <span>AI Technology</span>
+            </a>
+
+            <a href="/analytics">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/about">
+                <i class="fa-solid fa-user"></i>
+                <span>About</span>
+            </a>
+
+            <a href="/contact">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+            <i class="fa-solid fa-brain"></i>
+            AI Gesture Recognition
+            <br>
+            Powered by MediaPipe
+        </div>
+
+    </aside>
+
+
+    <main class="dashboard-main">
+
+        <div class="inner-page-header">
+
+            <div class="page-label">
+                <i class="fa-solid fa-microchip"></i>
+                AI TECHNOLOGY
+            </div>
+
+            <h1>
+                How GestureAI
+                <span>Recognizes Gestures</span>
+            </h1>
+
+            <p>
+                Our system combines computer vision, hand landmark
+                detection and machine learning to recognize gestures
+                from a live camera feed.
+            </p>
+
+        </div>
+
+
+        <div class="technology-grid">
+
+
+            <div class="technology-card">
+
+                <div class="step-number">01</div>
+
+                <div class="technology-icon">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+
+                <h2>Camera Input</h2>
+
+                <p>
+                    The webcam continuously captures frames of your
+                    hand and sends them to the recognition pipeline.
+                </p>
+
+            </div>
+
+
+            <div class="technology-card">
+
+                <div class="step-number">02</div>
+
+                <div class="technology-icon">
+                    <i class="fa-solid fa-hand"></i>
+                </div>
+
+                <h2>Hand Detection</h2>
+
+                <p>
+                    MediaPipe detects the hand and identifies
+                    21 important hand landmarks.
+                </p>
+
+            </div>
+
+
+            <div class="technology-card">
+
+                <div class="step-number">03</div>
+
+                <div class="technology-icon">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+
+                <h2>Feature Extraction</h2>
+
+                <p>
+                    Landmark coordinates are converted into numerical
+                    features that can be understood by the ML model.
+                </p>
+
+            </div>
+
+
+            <div class="technology-card">
+
+                <div class="step-number">04</div>
+
+                <div class="technology-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+
+                <h2>ML Classification</h2>
+
+                <p>
+                    The trained Random Forest model analyzes the
+                    extracted features and predicts the gesture.
+                </p>
+
+            </div>
+
+
+            <div class="technology-card">
+
+                <div class="step-number">05</div>
+
+                <div class="technology-icon">
+                    <i class="fa-solid fa-display"></i>
+                </div>
+
+                <h2>Live Result</h2>
+
+                <p>
+                    The recognized gesture is displayed instantly
+                    on the live recognition dashboard.
+                </p>
+
+            </div>
+
+
+            <div class="technology-card">
+
+                <div class="step-number">06</div>
+
+                <div class="technology-icon">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </div>
+
+                <h2>Continuous Tracking</h2>
+
+                <p>
+                    The system keeps processing incoming frames
+                    to provide a smooth real-time experience.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="tech-stack">
+
+            <div>
+                <small>TECHNOLOGY STACK</small>
+                <h2>Built With Modern AI Tools</h2>
+            </div>
+
+            <div class="stack-items">
+
+                <span>Python</span>
+                <span>OpenCV</span>
+                <span>MediaPipe</span>
+                <span>Scikit-learn</span>
+                <span>Random Forest</span>
+                <span>Flask</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-footer">
+            © 2026 GestureAI • AI Technology
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
+

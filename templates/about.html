@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About | GestureAI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            Gesture<span>AI</span>
+        </div>
+
+        <div class="sidebar-menu">
+
+            <a href="/">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+
+            <a href="/recognition">
+                <i class="fa-solid fa-camera"></i>
+                <span>Live Recognition</span>
+            </a>
+
+            <a href="/how-it-works">
+                <i class="fa-solid fa-microchip"></i>
+                <span>AI Technology</span>
+            </a>
+
+            <a href="/analytics">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/about" class="active">
+                <i class="fa-solid fa-user"></i>
+                <span>About</span>
+            </a>
+
+            <a href="/contact">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+            <i class="fa-solid fa-brain"></i>
+            AI Gesture Recognition
+            <br>
+            Powered by MediaPipe
+        </div>
+
+    </aside>
+
+
+    <main class="dashboard-main">
+
+        <div class="inner-page-header">
+
+            <div class="page-label">
+                <i class="fa-solid fa-circle-info"></i>
+                ABOUT THE PROJECT
+            </div>
+
+            <h1>
+                About
+                <span>GestureAI</span>
+            </h1>
+
+            <p>
+                A computer vision and machine learning based
+                hand gesture recognition system designed for
+                real-time interaction.
+            </p>
+
+        </div>
+
+
+        <div class="about-content-grid">
+
+
+            <div class="about-main-card">
+
+                <div class="about-card-icon">
+                    <i class="fa-solid fa-hand-sparkles"></i>
+                </div>
+
+                <h2>What is GestureAI?</h2>
+
+                <p>
+                    GestureAI is a real-time hand gesture recognition
+                    web application that uses computer vision and
+                    machine learning to understand hand movements.
+                </p>
+
+                <p>
+                    The application captures video through a webcam,
+                    detects hand landmarks using MediaPipe and passes
+                    the extracted features to a trained Random Forest
+                    classification model.
+                </p>
+
+                <p>
+                    The predicted gesture is then displayed instantly
+                    on the Live Recognition dashboard, making the system
+                    simple, interactive and easy to use.
+                </p>
+
+            </div>
+
+
+            <div class="about-main-card">
+
+                <div class="about-card-icon">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+
+                <h2>Project Objective</h2>
+
+                <p>
+                    The main objective of this project is to demonstrate
+                    how artificial intelligence and computer vision can
+                    be used to create a natural and interactive method
+                    of communication between humans and computers.
+                </p>
+
+                <ul class="about-list">
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        Real-time hand detection
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        Machine learning based classification
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        Multiple gesture recognition
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        Interactive web dashboard
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <div class="developer-card">
+
+            <div class="developer-avatar">
+                <i class="fa-solid fa-code"></i>
+            </div>
+
+            <div>
+
+                <small>DEVELOPER</small>
+
+                <h2>Muskan Verma</h2>
+
+                <p>
+                    B.Tech - Computer Science & Engineering Student
+                    and Python Developer interested in AI,
+                    Machine Learning and Web Development.
+                </p>
+
+                <div class="developer-tags">
+
+                    <span>Python</span>
+                    <span>AI / ML</span>
+                    <span>Computer Vision</span>
+                    <span>Flask</span>
+                    <span>Web Development</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-footer">
+            © 2026 GestureAI • Built with Python, OpenCV & MediaPipe
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics | GestureAI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            Gesture<span>AI</span>
+        </div>
+
+        <div class="sidebar-menu">
+
+            <a href="/">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+
+            <a href="/recognition">
+                <i class="fa-solid fa-camera"></i>
+                <span>Live Recognition</span>
+            </a>
+
+            <a href="/how-it-works">
+                <i class="fa-solid fa-microchip"></i>
+                <span>AI Technology</span>
+            </a>
+
+            <a href="/analytics" class="active">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="/about">
+                <i class="fa-solid fa-user"></i>
+                <span>About</span>
+            </a>
+
+            <a href="/contact">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+            <i class="fa-solid fa-brain"></i>
+            AI Gesture Recognition
+            <br>
+            Powered by MediaPipe
+        </div>
+
+    </aside>
+
+
+    <main class="dashboard-main">
+
+        <div class="inner-page-header">
+
+            <div class="page-label">
+                <i class="fa-solid fa-chart-line"></i>
+                ANALYTICS
+            </div>
+
+            <h1>
+                Gesture Recognition
+                <span>Overview</span>
+            </h1>
+
+            <p>
+                Explore the gestures supported by the trained
+                machine learning model.
+            </p>
+
+        </div>
+
+
+        <!-- OVERVIEW -->
+
+        <div class="analytics-overview">
+
+            <div class="analytics-stat">
+
+                <div class="analytics-stat-icon">
+                    <i class="fa-solid fa-hand"></i>
+                </div>
+
+                <div>
+                    <span>SUPPORTED GESTURES</span>
+                    <strong>10</strong>
+                </div>
+
+            </div>
+
+
+            <div class="analytics-stat">
+
+                <div class="analytics-stat-icon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+
+                <div>
+                    <span>MODEL TYPE</span>
+                    <strong>Random Forest</strong>
+                </div>
+
+            </div>
+
+
+            <div class="analytics-stat">
+
+                <div class="analytics-stat-icon">
+                    <i class="fa-solid fa-location-crosshairs"></i>
+                </div>
+
+                <div>
+                    <span>LANDMARKS</span>
+                    <strong>21</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- GESTURES -->
+
+        <div class="analytics-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <small>GESTURE LIBRARY</small>
+                    <h2>Supported Gestures</h2>
+                </div>
+
+                <span>
+                    10 Classes
+                </span>
+
+            </div>
+
+
+            <div class="gesture-library">
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">🖐️</div>
+                    <div>
+                        <h3>Open Palm</h3>
+                        <p>Open_Palm</p>
+                    </div>
+                </div>
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">✊</div>
+                    <div>
+                        <h3>Fist</h3>
+                        <p>Fist</p>
+                    </div>
+                </div>
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">👍</div>
+                    <div>
+                        <h3>Thumbs Up</h3>
+                        <p>Thumbs_Up</p>
+                    </div>
+                </div>
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">👎</div>
+                    <div>
+                        <h3>Thumbs Down</h3>
+                        <p>Thumbs_Down</p>
+                    </div>
+                </div>
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">✌️</div>
+                    <div>
+                        <h3>Peace</h3>
+                        <p>Peace</p>
+                    </div>
+                </div>
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">👌</div>
+                    <div>
+                        <h3>OK</h3>
+                        <p>OK</p>
+                    </div>
+                </div>
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">☝️</div>
+                    <div>
+                        <h3>Pointing</h3>
+                        <p>Pointing</p>
+                    </div>
+                </div>
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">🤟</div>
+                    <div>
+                        <h3>Love</h3>
+                        <p>Love</p>
+                    </div>
+                </div>
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">🤘</div>
+                    <div>
+                        <h3>Rock</h3>
+                        <p>Rock</p>
+                    </div>
+                </div>
+
+
+                <div class="gesture-library-card">
+                    <div class="library-emoji">☝️</div>
+                    <div>
+                        <h3>One Finger</h3>
+                        <p>One_Finger</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="analytics-note">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+                <strong>Recognition Pipeline</strong>
+
+                <p>
+                    Camera → MediaPipe Hand Landmarks →
+                    Feature Extraction → Random Forest →
+                    Gesture Prediction
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-footer">
+            © 2026 GestureAI • Analytics Dashboard
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
+
