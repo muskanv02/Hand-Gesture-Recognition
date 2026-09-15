@@ -260,13 +260,21 @@
                 </div>
 
 
-                <div class="video-wrap">
+                <div class="video-wrap" id="videoWrap">
+                    <video id="cameraVideo" autoplay playsinline muted></video>
+                    <canvas id="landmarkCanvas"></canvas>
+                    <div id="cameraMessage" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px;">
+                        Click <b>Start Camera</b> to begin recognition.
+                    </div>
+                </div>
 
-                    <img
-                        src="{{ url_for('video_feed') }}"
-                        alt="Live camera feed"
-                    >
-
+                <div style="display:flex; gap:12px; margin-top:14px;">
+                    <button id="startCameraBtn" type="button" style="cursor:pointer; padding:11px 18px; border:0; border-radius:10px;">
+                        <i class="fa-solid fa-camera"></i> Start Camera
+                    </button>
+                    <button id="stopCameraBtn" type="button" style="cursor:pointer; padding:11px 18px; border:0; border-radius:10px;" disabled>
+                        <i class="fa-solid fa-stop"></i> Stop
+                    </button>
                 </div>
 
 
@@ -430,180 +438,155 @@
 ====================================================== -->
 
 <script>
+const video = document.getElementById("cameraVideo");
+const canvas = document.getElementById("landmarkCanvas");
+const ctx = canvas.getContext("2d");
+const startBtn = document.getElementById("startCameraBtn");
+const stopBtn = document.getElementById("stopCameraBtn");
+const cameraMessage = document.getElementById("cameraMessage");
 
+let stream = null;
+let timer = null;
+let busy = false;
 
-/* =====================================================
-   STATUS CHECK
-===================================================== */
+const connections = [
+ [0,1],[1,2],[2,3],[3,4],
+ [0,5],[5,6],[6,7],[7,8],
+ [5,9],[9,10],[10,11],[11,12],
+ [9,13],[13,14],[14,15],[15,16],
+ [13,17],[17,18],[18,19],[19,20],[0,17]
+];
+
+function setStatus(id, text, ok=true) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '<i class="fa-solid fa-circle"></i> ' + text;
+}
 
 async function checkStatus() {
-
     try {
-
-        const response =
-            await fetch("/status");
-
-        const data =
-            await response.json();
-
-
-        const mp =
-            document.getElementById("mpStatus");
-
-        const model =
-            document.getElementById("modelStatus");
-
-        const camera =
-            document.getElementById("cameraStatus");
-
-
-        if (data.mediapipe) {
-
-            mp.innerHTML =
-                '<i class="fa-solid fa-circle"></i> MediaPipe Ready';
-
-        } else {
-
-            mp.innerHTML =
-                '<i class="fa-solid fa-circle"></i> MediaPipe Error';
-
-        }
-
-
-        if (data.model_loaded) {
-
-            model.innerHTML =
-                '<i class="fa-solid fa-circle"></i> Model Ready';
-
-        } else {
-
-            model.innerHTML =
-                '<i class="fa-solid fa-circle"></i> Model Not Loaded';
-
-        }
-
-
-        if (data.camera) {
-
-            camera.innerHTML =
-                '<i class="fa-solid fa-circle"></i> Camera Ready';
-
-        } else {
-
-            camera.innerHTML =
-                '<i class="fa-solid fa-circle"></i> Camera Error';
-
-        }
-
+        const r = await fetch("/status");
+        const data = await r.json();
+        setStatus("mpStatus", data.mediapipe ? "MediaPipe Ready" : "MediaPipe Error", data.mediapipe);
+        setStatus("modelStatus", data.model_loaded ? "Model Ready" : "Model Not Loaded", data.model_loaded);
+        setStatus("cameraStatus", "Browser Camera", true);
+    } catch (e) {
+        console.log(e);
     }
-
-    catch (error) {
-
-        console.log("Status Error:", error);
-
-    }
-
 }
 
-
-
-/* =====================================================
-   LIVE GESTURE UPDATE
-===================================================== */
-
-async function updateGesture() {
-
-    try {
-
-        const response =
-            await fetch("/prediction");
-
-
-        const data =
-            await response.json();
-
-
-        const icon =
-            document.getElementById("gestureIcon");
-
-
-        const name =
-            document.getElementById("gestureName");
-
-
-        const description =
-            document.getElementById("gestureDescription");
-
-
-        icon.textContent =
-            data.emoji || "🤚";
-
-
-        name.textContent =
-            data.label || "No Hand";
-
-
-        if (data.label === "No Hand") {
-
-            description.textContent =
-                "Waiting for gesture...";
-
-        }
-
-        else if (data.label === "Detection Error") {
-
-            description.textContent =
-                "Unable to recognize gesture";
-
-        }
-
-        else {
-
-            description.textContent =
-                "Gesture detected successfully";
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.log(
-            "Prediction Error:",
-            error
-        );
-
-    }
-
+function resizeCanvas() {
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
 }
 
+function drawLandmarks(points) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!points || !points.length) return;
 
+    ctx.lineWidth = 3;
+    connections.forEach(([a,b]) => {
+        ctx.beginPath();
+        ctx.moveTo(points[a].x * canvas.width, points[a].y * canvas.height);
+        ctx.lineTo(points[b].x * canvas.width, points[b].y * canvas.height);
+        ctx.stroke();
+    });
 
-/* =====================================================
-   START
-===================================================== */
+    points.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x * canvas.width, p.y * canvas.height, 5, 0, Math.PI * 2);
+        ctx.fill();
+    });
+}
 
+function updateGesture(data) {
+    document.getElementById("gestureIcon").textContent = data.emoji || "🤚";
+    document.getElementById("gestureName").textContent = data.label || "No Hand";
+
+    const desc = document.getElementById("gestureDescription");
+    if (data.label === "No Hand") desc.textContent = "Waiting for gesture...";
+    else if (data.label === "Detection Error") desc.textContent = "Unable to recognize gesture";
+    else desc.textContent = "Gesture detected successfully";
+}
+
+async function predictFrame() {
+    if (!stream || busy || video.readyState < 2) return;
+    busy = true;
+
+    try {
+        resizeCanvas();
+
+        const temp = document.createElement("canvas");
+        const width = 320;
+        const height = Math.round((video.videoHeight / video.videoWidth) * width) || 240;
+        temp.width = width;
+        temp.height = height;
+        temp.getContext("2d").drawImage(video, 0, 0, width, height);
+
+        const image = temp.toDataURL("image/jpeg", 0.65);
+
+        const response = await fetch("/prediction", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({image})
+        });
+
+        const data = await response.json();
+        updateGesture(data);
+        drawLandmarks(data.landmarks);
+    } catch (error) {
+        console.log("Prediction error:", error);
+    } finally {
+        busy = false;
+    }
+}
+
+async function startCamera() {
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: {facingMode: "user", width: {ideal: 640}, height: {ideal: 480}},
+            audio: false
+        });
+
+        video.srcObject = stream;
+        cameraMessage.style.display = "none";
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        setStatus("cameraStatus", "Camera Active", true);
+
+        video.onloadedmetadata = () => {
+            resizeCanvas();
+            timer = setInterval(predictFrame, 180);
+        };
+    } catch (error) {
+        cameraMessage.innerHTML = "Camera permission was denied or the camera is unavailable.<br>Please allow camera access and try again.";
+        setStatus("cameraStatus", "Camera Permission Required", false);
+        console.error(error);
+    }
+}
+
+function stopCamera() {
+    if (timer) clearInterval(timer);
+    timer = null;
+
+    if (stream) stream.getTracks().forEach(track => track.stop());
+    stream = null;
+    video.srcObject = null;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    cameraMessage.style.display = "flex";
+    cameraMessage.innerHTML = "Click <b>Start Camera</b> to begin recognition.";
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+
+    document.getElementById("gestureIcon").textContent = "🤚";
+    document.getElementById("gestureName").textContent = "No Hand";
+    document.getElementById("gestureDescription").textContent = "Waiting for gesture...";
+    setStatus("cameraStatus", "Camera Stopped", true);
+}
+
+startBtn.addEventListener("click", startCamera);
+stopBtn.addEventListener("click", stopCamera);
 checkStatus();
-
-updateGesture();
-
-
-/* Status every 3 seconds */
-
-setInterval(
-    checkStatus,
-    3000
-);
-
-
-/* Gesture every 200ms */
-
-setInterval(
-    updateGesture,
-    200
-);
-
-
 </script>
 
 
