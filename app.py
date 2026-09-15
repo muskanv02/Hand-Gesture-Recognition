@@ -48,9 +48,9 @@ def load_models():
             options = vision.HandLandmarkerOptions(
                 base_options=base_options,
                 num_hands=1,
-                min_hand_detection_confidence=0.5,
-                min_hand_presence_confidence=0.5,
-                min_tracking_confidence=0.5,
+                min_hand_detection_confidence=0.3,
+                min_hand_presence_confidence=0.3,
+                min_tracking_confidence=0.3,
             )
             landmarker = vision.HandLandmarker.create_from_options(options)
             print("MediaPipe Hand Landmarker loaded successfully.")
@@ -123,6 +123,13 @@ def prediction():
 
         if frame is None:
             return jsonify({"label": "No Hand", "emoji": "🤚", "landmarks": []})
+
+        # Keep enough resolution for reliable hand detection on cloud deployment.
+        # Browser frames may arrive compressed or smaller than expected.
+        h, w = frame.shape[:2]
+        if max(h, w) < 640:
+            scale = 640 / max(h, w)
+            frame = cv2.resize(frame, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_LINEAR)
 
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
