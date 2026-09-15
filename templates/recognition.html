@@ -1,27 +1,757 @@
-GestureAI
- Home  Live Recognition  AI Technology  Analytics  About  Contact
- AI Gesture Recognition
-Powered by MediaPipe
-LIVE CAMERA
-Live Gesture Recognition
-Show your hand clearly in front of the camera. GestureAI will detect your hand gesture in real time using computer vision and machine learning.
+<!DOCTYPE html>
 
- MediaPipe Checking...  Model Checking...  Camera Checking...
- Live Camera Feed
- Camera Active
- Click
-Start Camera
-to begin recognition.
- Start Camera
- Stop
- Place one hand inside the frame • Good lighting gives better results
-DETECTED GESTURE
-🤚
-No Hand
-Waiting for gesture...
- Recognition Tips
- Keep your complete hand visible inside the camera frame.
- Use good lighting for accurate gesture detection.
- Keep only one hand in front of the camera.
- Keep your hand steady while making a gesture.
-© 2026 GestureAI • AI Powered Hand Gesture Recognition
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        GestureAI | Live Recognition
+    </title>
+
+
+    <!-- Google Font -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- YOUR CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app-shell">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <i class="fa-solid fa-hand"></i>
+
+            </div>
+
+
+            <div class="brand-name">
+
+                Gesture<span>AI</span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <a
+                href="{{ url_for('home') }}"
+            >
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>
+                    Home
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="{{ url_for('recognition') }}"
+                class="active"
+            >
+
+                <i class="fa-solid fa-video"></i>
+
+                <span>
+                    Live Recognition
+                </span>
+
+            </a>
+
+
+
+            <a href="#technology">
+
+                <i class="fa-solid fa-microchip"></i>
+
+                <span>
+                    AI Technology
+                </span>
+
+            </a>
+
+
+
+            <a href="#analytics">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                <span>
+                    Analytics
+                </span>
+
+            </a>
+
+
+
+            <a href="#about">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <span>
+                    About
+                </span>
+
+            </a>
+
+
+
+            <a href="#contact">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                <span>
+                    Contact
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <div class="online-dot"></div>
+
+            <div>
+
+                <strong>
+                    AI Gesture Recognition
+                </strong>
+
+                <small>
+                    Powered by MediaPipe
+                </small>
+
+            </div>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+
+            <div class="live-badge">
+
+                <span></span>
+
+                LIVE CAMERA
+
+            </div>
+
+
+
+            <div class="top-icons">
+
+                <button>
+
+                    <i class="fa-solid fa-sun"></i>
+
+                </button>
+
+
+                <button>
+
+                    <i class="fa-regular fa-user"></i>
+
+                </button>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- PAGE HEADING -->
+
+        <section class="page-heading">
+
+            <h1>
+
+                Live Gesture
+                <span>
+                    Recognition
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                Show your hand clearly in front of
+                the camera. GestureAI detects your
+                hand gesture using computer vision,
+                MediaPipe and machine learning.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             STATUS
+        ================================================== -->
+
+        <section class="status-card">
+
+
+            <!-- MEDIAPIPE -->
+
+            <div class="status-item">
+
+                <div
+                    class="status-light"
+                    id="mpLight"
+                ></div>
+
+                <div>
+
+                    <strong id="mpStatus">
+
+                        Checking MediaPipe...
+
+                    </strong>
+
+                    <small>
+
+                        Hand detection active
+
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="status-divider"></div>
+
+
+
+            <!-- MODEL -->
+
+            <div class="status-item">
+
+                <div
+                    class="status-light"
+                    id="modelLight"
+                ></div>
+
+                <div>
+
+                    <strong id="modelStatus">
+
+                        Checking Model...
+
+                    </strong>
+
+                    <small>
+
+                        Gesture model ready
+
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="status-divider"></div>
+
+
+
+            <!-- CAMERA -->
+
+            <div class="status-item">
+
+                <div
+                    class="status-light"
+                    id="cameraLight"
+                ></div>
+
+                <div>
+
+                    <strong id="cameraStatus">
+
+                        Browser Camera
+
+                    </strong>
+
+                    <small id="cameraStatusSub">
+
+                        Waiting for permission
+
+                    </small>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             RECOGNITION GRID
+        ================================================== -->
+
+        <section class="recognition-grid">
+
+
+            <!-- =================================================
+                 CAMERA
+            ================================================== -->
+
+            <div class="camera-card">
+
+
+                <div class="card-header">
+
+
+                    <div class="card-title">
+
+                        <i class="fa-solid fa-camera-retro"></i>
+
+                        <span>
+                            Live Camera Feed
+                        </span>
+
+                    </div>
+
+
+
+                    <div
+                        class="camera-live-status"
+                        id="cameraLiveStatus"
+                    >
+
+                        <span></span>
+
+                        Camera Inactive
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- VIDEO -->
+
+                <div class="video-wrapper">
+
+
+                    <video
+                        id="video"
+                        autoplay
+                        playsinline
+                        muted
+                    ></video>
+
+
+
+                    <!-- Hidden canvas for sending frames -->
+
+                    <canvas
+                        id="canvas"
+                    ></canvas>
+
+
+
+                    <!-- Placeholder -->
+
+                    <div
+                        class="video-placeholder"
+                        id="videoPlaceholder"
+                    >
+
+                        <i class="fa-solid fa-video"></i>
+
+                        <p>
+
+                            Click "Start Camera"
+                            to begin
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="scan-line"></div>
+
+
+                </div>
+
+
+
+                <!-- CAMERA BUTTONS -->
+
+                <div class="camera-controls">
+
+
+                    <button
+                        class="btn btn-primary"
+                        id="startCamera"
+                    >
+
+                        <i class="fa-solid fa-video"></i>
+
+                        Start Camera
+
+                    </button>
+
+
+
+                    <button
+                        class="btn btn-secondary"
+                        id="stopCamera"
+                        disabled
+                    >
+
+                        <i class="fa-solid fa-stop"></i>
+
+                        Stop Camera
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- NOTE -->
+
+                <div class="camera-note">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <span>
+
+                        Keep your complete hand
+                        inside the frame • Good lighting
+                        gives better results
+
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT SIDE
+            ================================================== -->
+
+            <div class="right-column">
+
+
+                <!-- =================================================
+                     DETECTED GESTURE
+                ================================================== -->
+
+                <div class="result-card">
+
+
+                    <div class="result-heading">
+
+                        <i class="fa-solid fa-crosshairs"></i>
+
+                        <span>
+                            DETECTED GESTURE
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="gesture-result">
+
+
+                        <!-- EMOJI -->
+
+                        <div
+                            class="gesture-emoji"
+                            id="gestureEmoji"
+                        >
+
+                            🤚
+
+                        </div>
+
+
+
+                        <!-- GESTURE NAME -->
+
+                        <h2 id="gestureName">
+
+                            No Hand
+
+                        </h2>
+
+
+
+                        <p id="gestureMessage">
+
+                            Start the camera and show
+                            your hand.
+
+                        </p>
+
+
+
+                        <!-- =================================================
+                             CONFIDENCE BAR
+                             Changes for EVERY gesture
+                        ================================================== -->
+
+                        <div class="confidence-box">
+
+
+                            <div class="confidence-header">
+
+                                <span>
+                                    Confidence
+                                </span>
+
+                                <strong
+                                    id="confidenceValue"
+                                >
+                                    0%
+                                </strong>
+
+                            </div>
+
+
+
+                            <div class="confidence-track">
+
+                                <div
+                                    class="confidence-fill"
+                                    id="confidenceBar"
+                                    style="width: 0%;"
+                                ></div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     RECOGNITION TIPS
+                     Supported Gestures removed
+                ================================================== -->
+
+                <div class="tips-card">
+
+
+                    <div class="tips-title">
+
+                        <i class="fa-regular fa-lightbulb"></i>
+
+                        <span>
+                            Recognition Tips
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="tip">
+
+                        <i
+                            class="fa-solid fa-hand-point-up"
+                        ></i>
+
+                        <span>
+
+                            Keep your complete hand
+                            visible inside the camera frame.
+
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="tip">
+
+                        <i
+                            class="fa-solid fa-circle-check"
+                        ></i>
+
+                        <span>
+
+                            Use good lighting for
+                            accurate gesture detection.
+
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="tip">
+
+                        <i
+                            class="fa-solid fa-circle-check"
+                        ></i>
+
+                        <span>
+
+                            Keep only one hand
+                            in front of the camera.
+
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="tip">
+
+                        <i
+                            class="fa-solid fa-circle-check"
+                        ></i>
+
+                        <span>
+
+                            Keep your hand steady
+                            while making a gesture.
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            © 2026 GestureAI • AI Powered
+            Hand Gesture Recognition
+
+        </footer>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =================================================
+     YOUR JS
+================================================== -->
+
+<script
+    src="{{ url_for('static', filename='js/script.js') }}"
+    defer
+></script>
+
+
+</body>
+
+</html>
