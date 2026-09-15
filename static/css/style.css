@@ -3596,3 +3596,33 @@ textarea {
         margin-top: 18px;
     }
 }
+
+/* ================================
+   CAMERA AREA
+================================ */
+
+.video-wrap {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    min-height: 420px;
+    background: #080b16;
+    border-radius: 13px;
+    overflow: hidden;
+}
+
+.video-wrap video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-wrap canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
