@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -11,17 +10,12 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        GestureAI | Live Recognition
-    </title>
+    <title>GestureAI | Live Recognition</title>
 
 
-    <!-- Google Font -->
+    <!-- ================= GOOGLE FONT ================= -->
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link
         rel="preconnect"
@@ -35,7 +29,7 @@
     >
 
 
-    <!-- Font Awesome -->
+    <!-- ================= FONT AWESOME ================= -->
 
     <link
         rel="stylesheet"
@@ -43,7 +37,7 @@
     >
 
 
-    <!-- YOUR CSS -->
+    <!-- ================= MAIN CSS ================= -->
 
     <link
         rel="stylesheet"
@@ -56,45 +50,33 @@
 <body>
 
 
-<div class="app-shell">
+<div class="dashboard">
 
 
-    <!-- =================================================
+    <!-- =====================================================
          SIDEBAR
-    ================================================== -->
+         ===================================================== -->
 
     <aside class="sidebar">
 
 
-        <!-- BRAND -->
+        <!-- LOGO -->
 
-        <div class="brand">
+        <div class="sidebar-logo">
 
-            <div class="brand-icon">
-
-                <i class="fa-solid fa-hand"></i>
-
-            </div>
-
-
-            <div class="brand-name">
-
-                Gesture<span>AI</span>
-
-            </div>
+            Gesture<span>AI</span>
 
         </div>
 
 
+        <!-- MENU -->
 
-        <!-- NAVIGATION -->
-
-        <nav class="sidebar-nav">
+        <nav class="sidebar-menu">
 
 
-            <a
-                href="{{ url_for('home') }}"
-            >
+            <!-- HOME -->
+
+            <a href="{{ url_for('home') }}">
 
                 <i class="fa-solid fa-house"></i>
 
@@ -105,13 +87,14 @@
             </a>
 
 
+            <!-- LIVE RECOGNITION -->
 
             <a
                 href="{{ url_for('recognition') }}"
                 class="active"
             >
 
-                <i class="fa-solid fa-video"></i>
+                <i class="fa-solid fa-camera"></i>
 
                 <span>
                     Live Recognition
@@ -120,8 +103,9 @@
             </a>
 
 
+            <!-- AI TECHNOLOGY -->
 
-            <a href="#technology">
+            <a href="{{ url_for('how_it_works') }}">
 
                 <i class="fa-solid fa-microchip"></i>
 
@@ -132,10 +116,11 @@
             </a>
 
 
+            <!-- ANALYTICS -->
 
-            <a href="#analytics">
+            <a href="{{ url_for('analytics') }}">
 
-                <i class="fa-solid fa-chart-column"></i>
+                <i class="fa-solid fa-chart-line"></i>
 
                 <span>
                     Analytics
@@ -144,8 +129,9 @@
             </a>
 
 
+            <!-- ABOUT -->
 
-            <a href="#about">
+            <a href="{{ url_for('about') }}">
 
                 <i class="fa-solid fa-circle-info"></i>
 
@@ -156,8 +142,9 @@
             </a>
 
 
+            <!-- CONTACT -->
 
-            <a href="#contact">
+            <a href="{{ url_for('contact') }}">
 
                 <i class="fa-solid fa-envelope"></i>
 
@@ -171,24 +158,26 @@
         </nav>
 
 
-
         <!-- SIDEBAR BOTTOM -->
 
         <div class="sidebar-bottom">
 
-            <div class="online-dot"></div>
 
             <div>
 
-                <strong>
-                    AI Gesture Recognition
-                </strong>
+                <i class="fa-solid fa-circle-check"></i>
 
-                <small>
-                    Powered by MediaPipe
-                </small>
+                AI Gesture Recognition
 
             </div>
+
+
+            <div>
+
+                Powered by MediaPipe
+
+            </div>
+
 
         </div>
 
@@ -197,217 +186,122 @@
 
 
 
-    <!-- =================================================
+    <!-- =====================================================
          MAIN CONTENT
-    ================================================== -->
+         ===================================================== -->
 
-    <main class="main-content">
-
-
-        <!-- TOP BAR -->
-
-        <header class="topbar">
+    <main class="dashboard-main">
 
 
-            <div class="live-badge">
+        <!-- =================================================
+             PAGE HEADER
+             ================================================= -->
 
-                <span></span>
+        <div class="inner-page-header">
+
+
+            <div class="page-label">
+
+                <i class="fa-solid fa-circle"></i>
 
                 LIVE CAMERA
 
             </div>
 
 
-
-            <div class="top-icons">
-
-                <button>
-
-                    <i class="fa-solid fa-sun"></i>
-
-                </button>
-
-
-                <button>
-
-                    <i class="fa-regular fa-user"></i>
-
-                </button>
-
-            </div>
-
-
-        </header>
-
-
-
-        <!-- PAGE HEADING -->
-
-        <section class="page-heading">
-
             <h1>
 
                 Live Gesture
-                <span>
-                    Recognition
-                </span>
+                <span>Recognition</span>
 
             </h1>
 
 
             <p>
 
-                Show your hand clearly in front of
-                the camera. GestureAI detects your
-                hand gesture using computer vision,
-                MediaPipe and machine learning.
+                Show your hand clearly in front of the camera.
+                GestureAI detects your hand gesture using
+                computer vision, MediaPipe and machine learning.
 
             </p>
 
-        </section>
+
+        </div>
 
 
 
         <!-- =================================================
-             STATUS
-        ================================================== -->
+             SYSTEM STATUS
+             ================================================= -->
 
-        <section class="status-card">
-
-
-            <!-- MEDIAPIPE -->
-
-            <div class="status-item">
-
-                <div
-                    class="status-light"
-                    id="mpLight"
-                ></div>
-
-                <div>
-
-                    <strong id="mpStatus">
-
-                        Checking MediaPipe...
-
-                    </strong>
-
-                    <small>
-
-                        Hand detection active
-
-                    </small>
-
-                </div>
-
-            </div>
+        <div class="status-row">
 
 
+            <span id="mpStatus">
 
-            <div class="status-divider"></div>
+                <i class="fa-solid fa-circle"></i>
 
+                MediaPipe Checking...
 
-
-            <!-- MODEL -->
-
-            <div class="status-item">
-
-                <div
-                    class="status-light"
-                    id="modelLight"
-                ></div>
-
-                <div>
-
-                    <strong id="modelStatus">
-
-                        Checking Model...
-
-                    </strong>
-
-                    <small>
-
-                        Gesture model ready
-
-                    </small>
-
-                </div>
-
-            </div>
+            </span>
 
 
+            <span id="modelStatus">
 
-            <div class="status-divider"></div>
+                <i class="fa-solid fa-circle"></i>
 
+                Model Checking...
 
-
-            <!-- CAMERA -->
-
-            <div class="status-item">
-
-                <div
-                    class="status-light"
-                    id="cameraLight"
-                ></div>
-
-                <div>
-
-                    <strong id="cameraStatus">
-
-                        Browser Camera
-
-                    </strong>
-
-                    <small id="cameraStatusSub">
-
-                        Waiting for permission
-
-                    </small>
-
-                </div>
-
-            </div>
+            </span>
 
 
-        </section>
+            <span id="cameraStatus">
+
+                <i class="fa-solid fa-circle"></i>
+
+                Browser Camera
+
+            </span>
+
+
+        </div>
 
 
 
         <!-- =================================================
-             RECOGNITION GRID
-        ================================================== -->
+             CAMERA + RESULT
+             ================================================= -->
 
-        <section class="recognition-grid">
+        <div class="recognition-layout">
 
 
             <!-- =================================================
-                 CAMERA
-            ================================================== -->
+                 CAMERA CARD
+                 ================================================= -->
 
-            <div class="camera-card">
-
-
-                <div class="card-header">
+            <section class="camera-card">
 
 
-                    <div class="card-title">
+                <!-- CAMERA HEADER -->
 
-                        <i class="fa-solid fa-camera-retro"></i>
+                <div class="camera-header">
 
-                        <span>
-                            Live Camera Feed
-                        </span>
 
-                    </div>
+                    <h2>
 
+                        <i class="fa-solid fa-video"></i>
+
+                        Live Camera Feed
+
+                    </h2>
 
 
                     <div
-                        class="camera-live-status"
+                        class="camera-status"
                         id="cameraLiveStatus"
                     >
 
-                        <span></span>
+                        <i class="fa-solid fa-circle"></i>
 
                         Camera Inactive
 
@@ -418,75 +312,79 @@
 
 
 
-                <!-- VIDEO -->
+                <!-- =================================================
+                     VIDEO
+                     ================================================= -->
 
-                <div class="video-wrapper">
+                <div
+                    class="video-wrap"
+                    id="videoWrap"
+                >
 
 
                     <video
-                        id="video"
+                        id="cameraVideo"
                         autoplay
                         playsinline
                         muted
                     ></video>
 
 
-
-                    <!-- Hidden canvas for sending frames -->
-
                     <canvas
-                        id="canvas"
+                        id="landmarkCanvas"
                     ></canvas>
 
 
-
-                    <!-- Placeholder -->
+                    <!-- CAMERA MESSAGE -->
 
                     <div
-                        class="video-placeholder"
-                        id="videoPlaceholder"
+                        id="cameraMessage"
+                        class="camera-message"
                     >
 
-                        <i class="fa-solid fa-video"></i>
+                        <i class="fa-solid fa-camera"></i>
 
-                        <p>
 
-                            Click "Start Camera"
-                            to begin
+                        <span>
 
-                        </p>
+                            Click
+                            <b>Start Camera</b>
+                            to begin recognition.
+
+                        </span>
+
 
                     </div>
-
-
-                    <div class="scan-line"></div>
 
 
                 </div>
 
 
 
-                <!-- CAMERA BUTTONS -->
+                <!-- =================================================
+                     CAMERA BUTTONS
+                     ================================================= -->
 
                 <div class="camera-controls">
 
 
                     <button
-                        class="btn btn-primary"
-                        id="startCamera"
+                        id="startCameraBtn"
+                        class="primary-btn"
+                        type="button"
                     >
 
-                        <i class="fa-solid fa-video"></i>
+                        <i class="fa-solid fa-camera"></i>
 
                         Start Camera
 
                     </button>
 
 
-
                     <button
-                        class="btn btn-secondary"
-                        id="stopCamera"
+                        id="stopCameraBtn"
+                        class="secondary-btn"
+                        type="button"
                         disabled
                     >
 
@@ -501,121 +399,119 @@
 
 
 
-                <!-- NOTE -->
+                <!-- HINT -->
 
-                <div class="camera-note">
+                <div class="hint">
 
-                    <i class="fa-solid fa-circle-info"></i>
+
+                    <i class="fa-regular fa-lightbulb"></i>
+
 
                     <span>
 
-                        Keep your complete hand
-                        inside the frame • Good lighting
-                        gives better results
+                        Keep your complete hand inside the frame
+                        • Good lighting gives better results
 
                     </span>
+
 
                 </div>
 
 
-            </div>
+            </section>
 
 
 
             <!-- =================================================
                  RIGHT SIDE
-            ================================================== -->
+                 ================================================= -->
 
-            <div class="right-column">
+            <aside class="recognition-side">
 
 
                 <!-- =================================================
-                     DETECTED GESTURE
-                ================================================== -->
+                     DETECTED GESTURE CARD
+                     ================================================= -->
 
-                <div class="result-card">
+                <div class="gesture-card">
 
 
-                    <div class="result-heading">
+                    <div class="gesture-card-label">
 
-                        <i class="fa-solid fa-crosshairs"></i>
+                        DETECTED GESTURE
 
-                        <span>
-                            DETECTED GESTURE
-                        </span>
+                    </div>
+
+
+                    <!-- GESTURE ICON -->
+
+                    <div
+                        class="gesture-icon"
+                        id="gestureIcon"
+                    >
+
+                        🤚
+
+                    </div>
+
+
+                    <!-- GESTURE NAME -->
+
+                    <div
+                        class="gesture-name"
+                        id="gestureName"
+                    >
+
+                        No Hand
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div
+                        class="gesture-description"
+                        id="gestureDescription"
+                    >
+
+                        Waiting for gesture...
 
                     </div>
 
 
 
-                    <div class="gesture-result">
+                    <!-- =================================================
+                         CONFIDENCE
+                         ================================================= -->
+
+                    <div class="confidence-box">
 
 
-                        <!-- EMOJI -->
+                        <div class="confidence-header">
 
-                        <div
-                            class="gesture-emoji"
-                            id="gestureEmoji"
-                        >
 
-                            🤚
+                            <span>
+                                Confidence
+                            </span>
+
+
+                            <strong id="confidenceValue">
+
+                                0%
+
+                            </strong>
+
 
                         </div>
 
 
-
-                        <!-- GESTURE NAME -->
-
-                        <h2 id="gestureName">
-
-                            No Hand
-
-                        </h2>
+                        <div class="confidence-bar">
 
 
-
-                        <p id="gestureMessage">
-
-                            Start the camera and show
-                            your hand.
-
-                        </p>
-
-
-
-                        <!-- =================================================
-                             CONFIDENCE BAR
-                             Changes for EVERY gesture
-                        ================================================== -->
-
-                        <div class="confidence-box">
-
-
-                            <div class="confidence-header">
-
-                                <span>
-                                    Confidence
-                                </span>
-
-                                <strong
-                                    id="confidenceValue"
-                                >
-                                    0%
-                                </strong>
-
-                            </div>
-
-
-
-                            <div class="confidence-track">
-
-                                <div
-                                    class="confidence-fill"
-                                    id="confidenceBar"
-                                    style="width: 0%;"
-                                ></div>
-
-                            </div>
+                            <div
+                                id="confidenceFill"
+                                class="confidence-fill"
+                            ></div>
 
 
                         </div>
@@ -629,88 +525,93 @@
 
 
                 <!-- =================================================
-                     RECOGNITION TIPS
-                     Supported Gestures removed
-                ================================================== -->
+                     TIPS CARD
+                     ================================================= -->
 
                 <div class="tips-card">
 
 
-                    <div class="tips-title">
+                    <h3>
 
-                        <i class="fa-regular fa-lightbulb"></i>
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                        Recognition Tips
+
+                    </h3>
+
+
+                    <!-- TIP 1 -->
+
+                    <div class="tip">
+
+
+                        <i class="fa-solid fa-check"></i>
+
 
                         <span>
-                            Recognition Tips
+
+                            Keep your complete hand visible
+                            inside the camera frame.
+
                         </span>
+
 
                     </div>
 
 
+                    <!-- TIP 2 -->
 
                     <div class="tip">
 
-                        <i
-                            class="fa-solid fa-hand-point-up"
-                        ></i>
+
+                        <i class="fa-solid fa-sun"></i>
+
 
                         <span>
 
-                            Keep your complete hand
-                            visible inside the camera frame.
+                            Use good lighting for accurate
+                            gesture detection.
 
                         </span>
+
 
                     </div>
 
 
+                    <!-- TIP 3 -->
 
                     <div class="tip">
 
-                        <i
-                            class="fa-solid fa-circle-check"
-                        ></i>
+
+                        <i class="fa-solid fa-hand"></i>
+
 
                         <span>
 
-                            Use good lighting for
-                            accurate gesture detection.
+                            Keep only one hand in front
+                            of the camera.
 
                         </span>
+
 
                     </div>
 
 
+                    <!-- TIP 4 -->
 
                     <div class="tip">
 
-                        <i
-                            class="fa-solid fa-circle-check"
-                        ></i>
+
+                        <i class="fa-solid fa-arrows-to-circle"></i>
+
 
                         <span>
 
-                            Keep only one hand
-                            in front of the camera.
+                            Keep your hand steady while
+                            making a gesture.
 
                         </span>
 
-                    </div>
-
-
-
-                    <div class="tip">
-
-                        <i
-                            class="fa-solid fa-circle-check"
-                        ></i>
-
-                        <span>
-
-                            Keep your hand steady
-                            while making a gesture.
-
-                        </span>
 
                     </div>
 
@@ -718,19 +619,20 @@
                 </div>
 
 
-            </div>
+            </aside>
 
 
-        </section>
+        </div>
 
 
 
-        <!-- FOOTER -->
+        <!-- =================================================
+             FOOTER
+             ================================================= -->
 
-        <footer>
+        <footer class="dashboard-footer">
 
-            © 2026 GestureAI • AI Powered
-            Hand Gesture Recognition
+            © 2026 GestureAI • AI Powered Hand Gesture Recognition
 
         </footer>
 
@@ -742,14 +644,1346 @@
 
 
 
-<!-- =================================================
-     YOUR JS
-================================================== -->
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
 
-<script
-    src="{{ url_for('static', filename='js/script.js') }}"
-    defer
-></script>
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =====================================================
+           ELEMENTS
+           ===================================================== */
+
+
+        const video =
+            document.getElementById(
+                "cameraVideo"
+            );
+
+
+        const canvas =
+            document.getElementById(
+                "landmarkCanvas"
+            );
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        const startBtn =
+            document.getElementById(
+                "startCameraBtn"
+            );
+
+
+        const stopBtn =
+            document.getElementById(
+                "stopCameraBtn"
+            );
+
+
+        const cameraMessage =
+            document.getElementById(
+                "cameraMessage"
+            );
+
+
+        const cameraLiveStatus =
+            document.getElementById(
+                "cameraLiveStatus"
+            );
+
+
+        const gestureIcon =
+            document.getElementById(
+                "gestureIcon"
+            );
+
+
+        const gestureName =
+            document.getElementById(
+                "gestureName"
+            );
+
+
+        const gestureDescription =
+            document.getElementById(
+                "gestureDescription"
+            );
+
+
+        const confidenceValue =
+            document.getElementById(
+                "confidenceValue"
+            );
+
+
+        const confidenceFill =
+            document.getElementById(
+                "confidenceFill"
+            );
+
+
+        let stream = null;
+
+        let timer = null;
+
+        let processing = false;
+
+
+
+        /* =====================================================
+           STATUS FUNCTION
+           ===================================================== */
+
+        function setStatus(
+            id,
+            text
+        ) {
+
+
+            const element =
+                document.getElementById(id);
+
+
+            if (!element) {
+
+                return;
+
+            }
+
+
+            element.innerHTML =
+                '<i class="fa-solid fa-circle"></i> ' +
+                text;
+
+
+        }
+
+
+
+        /* =====================================================
+           CHECK BACKEND STATUS
+           ===================================================== */
+
+        async function checkStatus() {
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/status",
+                        {
+                            cache: "no-store"
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Backend status error"
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                /* MediaPipe */
+
+                setStatus(
+                    "mpStatus",
+                    data.mediapipe
+                        ? "MediaPipe Ready"
+                        : "MediaPipe Error"
+                );
+
+
+                /* Model */
+
+                setStatus(
+                    "modelStatus",
+                    data.model_loaded
+                        ? "Model Ready"
+                        : "Model Not Loaded"
+                );
+
+
+                /* Browser Camera */
+
+                setStatus(
+                    "cameraStatus",
+                    "Browser Camera Ready"
+                );
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    "Status error:",
+                    error
+                );
+
+
+                setStatus(
+                    "mpStatus",
+                    "Backend Unavailable"
+                );
+
+
+                setStatus(
+                    "modelStatus",
+                    "Backend Unavailable"
+                );
+
+
+                setStatus(
+                    "cameraStatus",
+                    "Camera Unavailable"
+                );
+
+
+            }
+
+
+        }
+
+
+
+        /* =====================================================
+           RESIZE CANVAS
+           ===================================================== */
+
+        function resizeCanvas() {
+
+
+            if (
+                video.videoWidth &&
+                video.videoHeight
+            ) {
+
+
+                canvas.width =
+                    video.videoWidth;
+
+
+                canvas.height =
+                    video.videoHeight;
+
+
+            }
+
+            else {
+
+
+                canvas.width = 640;
+
+                canvas.height = 480;
+
+
+            }
+
+
+        }
+
+
+
+        /* =====================================================
+           HAND LANDMARK CONNECTIONS
+           ===================================================== */
+
+        const connections = [
+
+
+            [0, 1],
+            [1, 2],
+            [2, 3],
+            [3, 4],
+
+
+            [0, 5],
+            [5, 6],
+            [6, 7],
+            [7, 8],
+
+
+            [5, 9],
+            [9, 10],
+            [10, 11],
+            [11, 12],
+
+
+            [9, 13],
+            [13, 14],
+            [14, 15],
+            [15, 16],
+
+
+            [13, 17],
+            [17, 18],
+            [18, 19],
+            [19, 20],
+
+
+            [0, 17]
+
+
+        ];
+
+
+
+        /* =====================================================
+           DRAW LANDMARKS
+           ===================================================== */
+
+        function drawLandmarks(points) {
+
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            if (
+                !Array.isArray(points) ||
+                points.length !== 21
+            ) {
+
+                return;
+
+            }
+
+
+            ctx.lineWidth = 3;
+
+            ctx.beginPath();
+
+
+            connections.forEach(
+                function ([a, b]) {
+
+
+                    if (
+                        !points[a] ||
+                        !points[b]
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    ctx.moveTo(
+                        points[a].x *
+                        canvas.width,
+
+                        points[a].y *
+                        canvas.height
+                    );
+
+
+                    ctx.lineTo(
+                        points[b].x *
+                        canvas.width,
+
+                        points[b].y *
+                        canvas.height
+                    );
+
+
+                }
+            );
+
+
+            ctx.stroke();
+
+
+            points.forEach(
+                function (point) {
+
+
+                    if (!point) {
+
+                        return;
+
+                    }
+
+
+                    ctx.beginPath();
+
+
+                    ctx.arc(
+                        point.x *
+                        canvas.width,
+
+                        point.y *
+                        canvas.height,
+
+                        5,
+
+                        0,
+
+                        Math.PI * 2
+                    );
+
+
+                    ctx.fill();
+
+
+                }
+            );
+
+
+        }
+
+
+
+        /* =====================================================
+           GESTURE DISPLAY
+           ===================================================== */
+
+        function updateGesture(
+            gesture,
+            confidence
+        ) {
+
+
+            /* -----------------------------------------------
+               Clean model label
+               ----------------------------------------------- */
+
+
+            let cleanGesture =
+                String(
+                    gesture || "No Hand"
+                )
+                .replaceAll(
+                    "_",
+                    " "
+                )
+                .trim();
+
+
+            let icon = "🤚";
+
+
+            /* -----------------------------------------------
+               Normalize gesture name
+               ----------------------------------------------- */
+
+
+            const normalizedGesture =
+                cleanGesture
+                .toLowerCase()
+                .replace(
+                    /\s+/g,
+                    " "
+                )
+                .trim();
+
+
+
+            /* =================================================
+               REQUIRED GESTURE MAPPING
+               ================================================= */
+
+
+            /*
+             * Pointing -> 2 Fingers
+             * ✌️
+             */
+
+            if (
+                normalizedGesture === "pointing"
+            ) {
+
+
+                cleanGesture =
+                    "2 Fingers";
+
+
+                icon =
+                    "✌️";
+
+
+            }
+
+
+            /*
+             * One Finger -> Pointing
+             * ☝️
+             */
+
+            else if (
+                normalizedGesture === "one finger"
+            ) {
+
+
+                cleanGesture =
+                    "Pointing";
+
+
+                icon =
+                    "☝️";
+
+
+            }
+
+
+            /* -----------------------------------------------
+               Open Palm
+               ----------------------------------------------- */
+
+            else if (
+                normalizedGesture === "open palm"
+            ) {
+
+
+                cleanGesture =
+                    "Open Palm";
+
+
+                icon =
+                    "✋";
+
+
+            }
+
+
+            /* -----------------------------------------------
+               Fist
+               ----------------------------------------------- */
+
+            else if (
+                normalizedGesture === "fist"
+            ) {
+
+
+                cleanGesture =
+                    "Fist";
+
+
+                icon =
+                    "✊";
+
+
+            }
+
+
+            /* -----------------------------------------------
+               Thumbs Up
+               ----------------------------------------------- */
+
+            else if (
+                normalizedGesture === "thumbs up"
+            ) {
+
+
+                cleanGesture =
+                    "Thumbs Up";
+
+
+                icon =
+                    "👍";
+
+
+            }
+
+
+            /* -----------------------------------------------
+               Thumbs Down
+               ----------------------------------------------- */
+
+            else if (
+                normalizedGesture === "thumbs down"
+            ) {
+
+
+                cleanGesture =
+                    "Thumbs Down";
+
+
+                icon =
+                    "👎";
+
+
+            }
+
+
+            /* -----------------------------------------------
+               Peace
+               ----------------------------------------------- */
+
+            else if (
+                normalizedGesture === "peace"
+            ) {
+
+
+                cleanGesture =
+                    "Peace";
+
+
+                icon =
+                    "✌️";
+
+
+            }
+
+
+            /* -----------------------------------------------
+               OK
+               ----------------------------------------------- */
+
+            else if (
+                normalizedGesture === "ok"
+            ) {
+
+
+                cleanGesture =
+                    "OK";
+
+
+                icon =
+                    "👌";
+
+
+            }
+
+
+            /* -----------------------------------------------
+               Love
+               ----------------------------------------------- */
+
+            else if (
+                normalizedGesture === "love"
+            ) {
+
+
+                cleanGesture =
+                    "Love";
+
+
+                icon =
+                    "🤟";
+
+
+            }
+
+
+            /* -----------------------------------------------
+               Rock
+               ----------------------------------------------- */
+
+            else if (
+                normalizedGesture === "rock"
+            ) {
+
+
+                cleanGesture =
+                    "Rock";
+
+
+                icon =
+                    "🤘";
+
+
+            }
+
+
+            /* -----------------------------------------------
+               No Hand
+               ----------------------------------------------- */
+
+            else if (
+                normalizedGesture === "no hand"
+            ) {
+
+
+                cleanGesture =
+                    "No Hand";
+
+
+                icon =
+                    "🤚";
+
+
+            }
+
+
+
+            /* =================================================
+               UPDATE GESTURE UI
+               ================================================= */
+
+
+            gestureName.textContent =
+                cleanGesture;
+
+
+            gestureIcon.textContent =
+                icon;
+
+
+
+            /* =================================================
+               CONFIDENCE CALCULATION
+               ================================================= */
+
+
+            let value =
+                Number(confidence);
+
+
+            if (
+                !Number.isFinite(value)
+            ) {
+
+                value = 0;
+
+            }
+
+
+            /*
+             * Backend may send:
+             *
+             * 0.87  -> 87%
+             *
+             * OR
+             *
+             * 87    -> 87%
+             */
+
+            if (
+                value > 0 &&
+                value <= 1
+            ) {
+
+                value =
+                    value * 100;
+
+            }
+
+
+            value =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        value
+                    )
+                );
+
+
+            value =
+                Math.round(value);
+
+
+
+            /* =================================================
+               UPDATE CONFIDENCE TEXT
+               ================================================= */
+
+            confidenceValue.textContent =
+                value + "%";
+
+
+
+            /* =================================================
+               UPDATE CONFIDENCE BAR
+               ================================================= */
+
+            confidenceFill.style.width =
+                value + "%";
+
+
+
+            /* =================================================
+               DESCRIPTION
+               ================================================= */
+
+            if (
+                normalizedGesture === "no hand" ||
+                cleanGesture === "No Hand"
+            ) {
+
+
+                gestureDescription.textContent =
+                    "Waiting for gesture...";
+
+
+            }
+
+            else {
+
+
+                gestureDescription.textContent =
+                    "Gesture detected successfully.";
+
+
+            }
+
+
+        }
+
+
+
+        /* =====================================================
+           PREDICTION
+           ===================================================== */
+
+        async function predict() {
+
+
+            if (
+                !stream ||
+                processing ||
+                video.readyState < 2
+            ) {
+
+                return;
+
+            }
+
+
+            processing = true;
+
+
+            try {
+
+
+                /* ---------------------------------------------
+                   Temporary Canvas
+                   --------------------------------------------- */
+
+
+                const tempCanvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+
+                const tempCtx =
+                    tempCanvas.getContext(
+                        "2d"
+                    );
+
+
+                const width = 640;
+
+
+                const sourceWidth =
+                    video.videoWidth ||
+                    640;
+
+
+                const sourceHeight =
+                    video.videoHeight ||
+                    480;
+
+
+                const height =
+                    Math.round(
+                        sourceHeight *
+                        width /
+                        sourceWidth
+                    );
+
+
+                tempCanvas.width =
+                    width;
+
+
+                tempCanvas.height =
+                    height;
+
+
+
+                /* ---------------------------------------------
+                   Capture camera frame
+                   --------------------------------------------- */
+
+                tempCtx.drawImage(
+                    video,
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+
+
+                /* ---------------------------------------------
+                   Convert to Base64
+                   --------------------------------------------- */
+
+                const image =
+                    tempCanvas.toDataURL(
+                        "image/jpeg",
+                        0.82
+                    );
+
+
+
+                /* ---------------------------------------------
+                   Send image to Flask
+                   --------------------------------------------- */
+
+                const response =
+                    await fetch(
+                        "/prediction",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    image: image
+                                })
+
+                        }
+                    );
+
+
+
+                const data =
+                    await response.json();
+
+
+
+                if (!response.ok) {
+
+
+                    throw new Error(
+                        data.error ||
+                        "Prediction failed"
+                    );
+
+
+                }
+
+
+
+                /* ---------------------------------------------
+                   Update gesture
+                   --------------------------------------------- */
+
+                updateGesture(
+
+                    data.gesture ||
+                    data.label ||
+                    "No Hand",
+
+                    data.confidence || 0
+
+                );
+
+
+
+                /* ---------------------------------------------
+                   Draw landmarks
+                   --------------------------------------------- */
+
+                drawLandmarks(
+                    data.landmarks || []
+                );
+
+
+            }
+
+
+            catch (error) {
+
+
+                console.error(
+                    "Prediction error:",
+                    error
+                );
+
+
+                gestureName.textContent =
+                    "Detection Error";
+
+
+                gestureIcon.textContent =
+                    "⚠️";
+
+
+                gestureDescription.textContent =
+                    error.message ||
+                    "Unable to process image.";
+
+
+                confidenceValue.textContent =
+                    "0%";
+
+
+                confidenceFill.style.width =
+                    "0%";
+
+
+                drawLandmarks([]);
+
+
+            }
+
+
+            finally {
+
+
+                processing = false;
+
+
+            }
+
+
+        }
+
+
+
+        /* =====================================================
+           START CAMERA
+           ===================================================== */
+
+        async function startCamera() {
+
+
+            try {
+
+
+                /* ---------------------------------------------
+                   Request browser camera
+                   --------------------------------------------- */
+
+                stream =
+                    await navigator
+                    .mediaDevices
+                    .getUserMedia({
+
+                        video: {
+
+                            facingMode: "user",
+
+                            width: {
+
+                                ideal: 1280
+
+                            },
+
+                            height: {
+
+                                ideal: 720
+
+                            },
+
+                            frameRate: {
+
+                                ideal: 30,
+
+                                max: 30
+
+                            }
+
+                        },
+
+                        audio: false
+
+                    });
+
+
+
+                /* ---------------------------------------------
+                   Attach stream
+                   --------------------------------------------- */
+
+                video.srcObject =
+                    stream;
+
+
+                await video.play();
+
+
+
+                /* ---------------------------------------------
+                   Update UI
+                   --------------------------------------------- */
+
+                cameraMessage.style.display =
+                    "none";
+
+
+                startBtn.disabled =
+                    true;
+
+
+                stopBtn.disabled =
+                    false;
+
+
+
+                setStatus(
+                    "cameraStatus",
+                    "Camera Active"
+                );
+
+
+                cameraLiveStatus.innerHTML =
+                    '<i class="fa-solid fa-circle"></i> Camera Active';
+
+
+
+                /* ---------------------------------------------
+                   Resize canvas
+                   --------------------------------------------- */
+
+                resizeCanvas();
+
+
+
+                /* ---------------------------------------------
+                   Start prediction loop
+                   --------------------------------------------- */
+
+                if (timer) {
+
+                    clearInterval(timer);
+
+                }
+
+
+                timer =
+                    setInterval(
+                        predict,
+                        250
+                    );
+
+
+            }
+
+
+            catch (error) {
+
+
+                console.error(
+                    "Camera error:",
+                    error
+                );
+
+
+                cameraMessage.style.display =
+                    "flex";
+
+
+                cameraMessage.innerHTML =
+                    '<i class="fa-solid fa-triangle-exclamation"></i>' +
+                    '<span>Camera permission denied or unavailable.</span>';
+
+
+                setStatus(
+                    "cameraStatus",
+                    "Camera Error"
+                );
+
+
+            }
+
+
+        }
+
+
+
+        /* =====================================================
+           STOP CAMERA
+           ===================================================== */
+
+        function stopCamera() {
+
+
+            /* ---------------------------------------------
+               Stop prediction timer
+               --------------------------------------------- */
+
+            if (timer) {
+
+
+                clearInterval(timer);
+
+                timer = null;
+
+
+            }
+
+
+
+            /* ---------------------------------------------
+               Stop camera tracks
+               --------------------------------------------- */
+
+            if (stream) {
+
+
+                stream
+                    .getTracks()
+                    .forEach(
+                        track =>
+                            track.stop()
+                    );
+
+
+                stream = null;
+
+
+            }
+
+
+
+            /* ---------------------------------------------
+               Remove video stream
+               --------------------------------------------- */
+
+            video.srcObject =
+                null;
+
+
+
+            /* ---------------------------------------------
+               Clear landmarks
+               --------------------------------------------- */
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+
+            /* ---------------------------------------------
+               Reset camera message
+               --------------------------------------------- */
+
+            cameraMessage.style.display =
+                "flex";
+
+
+            cameraMessage.innerHTML =
+                '<i class="fa-solid fa-camera"></i>' +
+                '<span>Click <b>Start Camera</b> to begin recognition.</span>';
+
+
+
+            /* ---------------------------------------------
+               Reset buttons
+               --------------------------------------------- */
+
+            startBtn.disabled =
+                false;
+
+
+            stopBtn.disabled =
+                true;
+
+
+
+            /* ---------------------------------------------
+               Camera status
+               --------------------------------------------- */
+
+            cameraLiveStatus.innerHTML =
+                '<i class="fa-solid fa-circle"></i> Camera Inactive';
+
+
+
+            /* ---------------------------------------------
+               Reset gesture
+               --------------------------------------------- */
+
+            updateGesture(
+                "No Hand",
+                0
+            );
+
+
+        }
+
+
+
+        /* =====================================================
+           BUTTON EVENTS
+           ===================================================== */
+
+
+        startBtn.addEventListener(
+            "click",
+            startCamera
+        );
+
+
+        stopBtn.addEventListener(
+            "click",
+            stopCamera
+        );
+
+
+
+        /* =====================================================
+           WINDOW RESIZE
+           ===================================================== */
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+
+        /* =====================================================
+           PAGE CLOSE
+           ===================================================== */
+
+        window.addEventListener(
+            "beforeunload",
+            stopCamera
+        );
+
+
+
+        /* =====================================================
+           INITIAL BACKEND STATUS
+           ===================================================== */
+
+        checkStatus();
+
+
+    }
+
+);
+
+</script>
 
 
 </body>
