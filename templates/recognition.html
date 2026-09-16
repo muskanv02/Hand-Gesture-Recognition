@@ -713,10 +713,11 @@
     let cameraRunning = false;
 
 
-    // One request approximately every 1.2 seconds.
-    // This reduces Render CPU/RAM pressure.
+    // One request approximately every 3 seconds.
+    // This significantly reduces Render CPU/RAM pressure
+    // and prevents the worker from being OOM-killed.
 
-    const PREDICTION_INTERVAL = 1200;
+    const PREDICTION_INTERVAL = 3000;
 
 
 
@@ -1503,8 +1504,10 @@
 
 
 
-            // Keep request reasonably small
-            const maxWidth = 640;
+            // Keep request small to reduce backend
+            // memory usage during MediaPipe processing.
+
+            const maxWidth = 320;
 
 
             const scale =
@@ -1556,12 +1559,14 @@
 
             // ---------------------------------------------
             // JPEG
+            // Lower quality (0.5) further reduces payload
+            // size and backend decode/processing memory.
             // ---------------------------------------------
 
             const image =
                 tempCanvas.toDataURL(
                     "image/jpeg",
-                    0.70
+                    0.5
                 );
 
 
@@ -2039,11 +2044,12 @@
 
 
 
-    // Refresh backend status every 10 sec
+    // Refresh backend status every 20 sec
+    // (reduced from 10s to further cut backend load)
 
     setInterval(
         checkBackendStatus,
-        10000
+        20000
     );
 
 

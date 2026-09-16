@@ -454,6 +454,11 @@ def prediction():
         )
 
 
+        # Free the raw byte buffers as soon as possible
+        del image_bytes
+        del np_array
+
+
         if frame is None:
 
             return jsonify({
@@ -472,12 +477,15 @@ def prediction():
 
         # =================================================
         # RESIZE FRAME
+        # Kept small (max 320px) to reduce peak memory
+        # usage during MediaPipe processing on low-RAM
+        # hosting (Render free tier).
         # =================================================
 
         height, width = frame.shape[:2]
 
 
-        max_dimension = 640
+        max_dimension = 320
 
 
         if max(
@@ -528,6 +536,10 @@ def prediction():
         )
 
 
+        # Frame no longer needed in BGR form
+        del frame
+
+
         # =================================================
         # MEDIAPIPE IMAGE
         # =================================================
@@ -547,6 +559,11 @@ def prediction():
         result = landmarker.detect(
             mp_image
         )
+
+
+        # Release image objects promptly
+        del mp_image
+        del rgb_frame
 
 
         # =================================================
