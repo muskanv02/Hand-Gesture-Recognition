@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, send_from_directory
+from flask import Flask, render_template, jsonify, request
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 import mediapipe as mp
@@ -9,14 +9,14 @@ import os
 import base64
 
 
+app = Flask(__name__)
+
+
 # =========================================================
 # PATHS
 # =========================================================
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-STATIC_DIR = os.path.join(BASE_DIR, "static")
-TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 
 MODEL_PATH = os.path.join(
     BASE_DIR,
@@ -32,18 +32,7 @@ LANDMARKER_PATH = os.path.join(
 
 
 # =========================================================
-# FLASK APP
-# =========================================================
-
-app = Flask(
-    __name__,
-    static_folder=STATIC_DIR,
-    template_folder=TEMPLATE_DIR
-)
-
-
-# =========================================================
-# GLOBAL MODELS
+# GLOBAL VARIABLES
 # =========================================================
 
 model = None
@@ -55,158 +44,174 @@ landmarker = None
 # =========================================================
 
 GESTURE_EMOJIS = {
+
     "Open_Palm": "🖐️",
+    "Open Palm": "🖐️",
+
     "Fist": "✊",
+
     "Thumbs_Up": "👍",
+    "Thumbs Up": "👍",
+
     "Thumbs_Down": "👎",
+    "Thumbs Down": "👎",
+
     "Peace": "✌️",
+
     "OK": "👌",
 
-    # Pointing model label is displayed as 2 Fingers
+    # Model's Pointing class should display
+    # as 2 Fingers according to your UI requirement
     "Pointing": "✌️",
 
     "Love": "🤟",
+
     "Rock": "🤘",
 
-    # One Finger is displayed as Pointing
     "One_Finger": "☝️",
     "One Finger": "☝️"
 }
 
 
 # =========================================================
-# LOAD ML MODEL
+# LOAD MODEL + MEDIAPIPE
 # =========================================================
 
-def load_model():
+def load_models():
 
     global model
+    global landmarker
+
+    # -------------------------
+    # Load ML Model
+    # -------------------------
 
     try:
 
         if not os.path.exists(MODEL_PATH):
 
-            print("ERROR: Gesture model not found:")
-            print(MODEL_PATH)
+            print(
+                "MODEL FILE NOT FOUND:",
+                MODEL_PATH
+            )
 
-            model = None
-            return
+        else:
 
-        model = joblib.load(MODEL_PATH)
+            model = joblib.load(
+                MODEL_PATH
+            )
 
-        print("======================================")
-        print("Gesture model loaded successfully.")
-        print("Model path:", MODEL_PATH)
-        print("======================================")
+            print(
+                "Gesture model loaded successfully."
+            )
 
     except Exception as e:
 
+        print(
+            "MODEL LOAD ERROR:",
+            repr(e)
+        )
+
         model = None
 
-        print("======================================")
-        print("ERROR loading gesture model")
-        print(str(e))
-        print("======================================")
 
-
-# =========================================================
-# LOAD MEDIAPIPE HAND LANDMARKER
-# =========================================================
-
-def load_landmarker():
-
-    global landmarker
+    # -------------------------
+    # Load MediaPipe
+    # -------------------------
 
     try:
 
         if not os.path.exists(LANDMARKER_PATH):
 
-            print("ERROR: hand_landmarker.task not found:")
-            print(LANDMARKER_PATH)
+            print(
+                "HAND LANDMARKER FILE NOT FOUND:",
+                LANDMARKER_PATH
+            )
 
-            landmarker = None
-            return
+        else:
 
-        base_options = python.BaseOptions(
-            model_asset_path=LANDMARKER_PATH
-        )
+            base_options = python.BaseOptions(
+                model_asset_path=LANDMARKER_PATH
+            )
 
-        options = vision.HandLandmarkerOptions(
 
-            base_options=base_options,
+            options = vision.HandLandmarkerOptions(
 
-            running_mode=vision.RunningMode.IMAGE,
+                base_options=base_options,
 
-            num_hands=1,
+                running_mode=vision.RunningMode.IMAGE,
 
-            min_hand_detection_confidence=0.2,
+                num_hands=1,
 
-            min_hand_presence_confidence=0.2,
+                min_hand_detection_confidence=0.2,
 
-            min_tracking_confidence=0.2
-        )
+                min_hand_presence_confidence=0.2,
 
-        landmarker = vision.HandLandmarker.create_from_options(
-            options
-        )
+                min_tracking_confidence=0.2
+            )
 
-        print("======================================")
-        print("MediaPipe Hand Landmarker loaded.")
-        print("Landmarker path:", LANDMARKER_PATH)
-        print("======================================")
+
+            landmarker = (
+                vision.HandLandmarker
+                .create_from_options(options)
+            )
+
+
+            print(
+                "MediaPipe Hand Landmarker loaded successfully."
+            )
 
     except Exception as e:
 
+        print(
+            "MEDIAPIPE LOAD ERROR:",
+            repr(e)
+        )
+
         landmarker = None
 
-        print("======================================")
-        print("ERROR loading MediaPipe")
-        print(str(e))
-        print("======================================")
+
+# Load everything when server starts
+load_models()
 
 
 # =========================================================
-# LOAD EVERYTHING ONCE
-# =========================================================
-
-load_model()
-load_landmarker()
-
-
-# =========================================================
-# STATIC FILES
-# =========================================================
-
-@app.route("/static/<path:filename>")
-def static_files(filename):
-
-    return send_from_directory(
-        STATIC_DIR,
-        filename
-    )
-
-
-# =========================================================
-# LANDMARK FEATURE EXTRACTION
+# FEATURE EXTRACTION
 # =========================================================
 
 def extract_landmarks(hand_landmarks):
 
     if not hand_landmarks:
 
-        return np.array([], dtype=np.float32)
+        return np.zeros(
+            42,
+            dtype=np.float32
+        )
 
-    base_x = hand_landmarks[0].x
-    base_y = hand_landmarks[0].y
+
+    # Wrist = landmark 0
+    wrist_x = hand_landmarks[0].x
+    wrist_y = hand_landmarks[0].y
+
 
     features = []
 
+
     for landmark in hand_landmarks:
 
+        relative_x = (
+            landmark.x - wrist_x
+        )
+
+        relative_y = (
+            landmark.y - wrist_y
+        )
+
         features.extend([
-            landmark.x - base_x,
-            landmark.y - base_y
+            relative_x,
+            relative_y
         ])
+
 
     return np.array(
         features,
@@ -239,7 +244,7 @@ def recognition():
 
 
 # =========================================================
-# HOW IT WORKS
+# AI TECHNOLOGY
 # =========================================================
 
 @app.route("/how-it-works")
@@ -287,7 +292,7 @@ def contact():
 
 
 # =========================================================
-# STATUS CHECK
+# SYSTEM STATUS
 # =========================================================
 
 @app.route("/status")
@@ -295,73 +300,81 @@ def status():
 
     return jsonify({
 
+        # Browser camera is handled by JavaScript
         "camera": True,
 
+        # Backend MediaPipe status
         "mediapipe": landmarker is not None,
 
+        # ML model status
         "model_loaded": model is not None
-
     })
 
 
 # =========================================================
-# PREDICTION
+# PREDICTION API
 # =========================================================
 
-@app.route("/prediction", methods=["POST"])
+@app.route(
+    "/prediction",
+    methods=["POST"]
+)
 def prediction():
 
-    # -----------------------------------------
+    # -------------------------
     # Check MediaPipe
-    # -----------------------------------------
+    # -------------------------
 
     if landmarker is None:
 
         return jsonify({
 
-            "label": "MediaPipe Error",
+            "success": False,
 
-            "gesture": "MediaPipe Error",
+            "label": "MediaPipe Error",
 
             "emoji": "⚠️",
 
             "confidence": 0,
 
-            "landmarks": []
+            "landmarks": [],
 
+            "error": "MediaPipe is not available."
         }), 500
 
 
-    # -----------------------------------------
+    # -------------------------
     # Check ML model
-    # -----------------------------------------
+    # -------------------------
 
     if model is None:
 
         return jsonify({
 
-            "label": "Model Error",
+            "success": False,
 
-            "gesture": "Model Error",
+            "label": "Model Error",
 
             "emoji": "⚠️",
 
             "confidence": 0,
 
-            "landmarks": []
+            "landmarks": [],
 
+            "error": "Gesture model is not loaded."
         }), 500
 
 
     try:
 
-        # -----------------------------------------
-        # Get JSON
-        # -----------------------------------------
+        # =================================================
+        # GET JSON
+        # =================================================
 
         data = request.get_json(
             silent=True
         ) or {}
+
 
         image_data = data.get(
             "image",
@@ -369,9 +382,25 @@ def prediction():
         )
 
 
-        # -----------------------------------------
-        # Remove Base64 prefix
-        # -----------------------------------------
+        if not image_data:
+
+            return jsonify({
+
+                "success": True,
+
+                "label": "No Hand",
+
+                "emoji": "🤚",
+
+                "confidence": 0,
+
+                "landmarks": []
+            })
+
+
+        # =================================================
+        # REMOVE DATA URL PREFIX
+        # =================================================
 
         if "," in image_data:
 
@@ -381,113 +410,98 @@ def prediction():
             )[1]
 
 
-        # -----------------------------------------
-        # Empty image
-        # -----------------------------------------
-
-        if not image_data:
-
-            return jsonify({
-
-                "label": "No Hand",
-
-                "gesture": "No Hand",
-
-                "emoji": "🤚",
-
-                "confidence": 0,
-
-                "landmarks": []
-
-            })
-
-
-        # -----------------------------------------
-        # Decode image
-        # -----------------------------------------
+        # =================================================
+        # DECODE IMAGE
+        # =================================================
 
         try:
 
-            raw = base64.b64decode(
-                image_data,
-                validate=True
+            image_bytes = base64.b64decode(
+                image_data
             )
 
         except Exception:
 
             return jsonify({
 
-                "label": "Invalid Image",
+                "success": False,
 
-                "gesture": "Invalid Image",
+                "label": "Detection Error",
 
                 "emoji": "⚠️",
 
                 "confidence": 0,
 
-                "landmarks": []
+                "landmarks": [],
 
+                "error": "Invalid image data."
             }), 400
 
 
-        # -----------------------------------------
-        # Convert image
-        # -----------------------------------------
+        # =================================================
+        # CONVERT IMAGE TO OPENCV
+        # =================================================
 
-        frame = cv2.imdecode(
-
-            np.frombuffer(
-                raw,
-                dtype=np.uint8
-            ),
-
-            cv2.IMREAD_COLOR
+        np_array = np.frombuffer(
+            image_bytes,
+            dtype=np.uint8
         )
 
 
-        # -----------------------------------------
-        # Image decoding failed
-        # -----------------------------------------
+        frame = cv2.imdecode(
+            np_array,
+            cv2.IMREAD_COLOR
+        )
+
 
         if frame is None:
 
             return jsonify({
 
-                "label": "No Hand",
+                "success": True,
 
-                "gesture": "No Hand",
+                "label": "No Hand",
 
                 "emoji": "🤚",
 
                 "confidence": 0,
 
                 "landmarks": []
-
             })
 
 
-        # -----------------------------------------
-        # Keep image reasonably small
-        # -----------------------------------------
+        # =================================================
+        # RESIZE FRAME
+        # =================================================
 
-        h, w = frame.shape[:2]
+        height, width = frame.shape[:2]
 
-        max_dimension = max(
-            h,
-            w
-        )
 
-        if max_dimension > 480:
+        max_dimension = 640
 
-            scale = 480 / max_dimension
 
-            new_width = int(
-                w * scale
+        if max(
+            height,
+            width
+        ) > max_dimension:
+
+            scale = (
+                max_dimension /
+                max(height, width)
             )
 
-            new_height = int(
-                h * scale
+
+            new_width = max(
+                1,
+                int(width * scale)
             )
+
+
+            new_height = max(
+                1,
+                int(height * scale)
+            )
+
 
             frame = cv2.resize(
 
@@ -502,11 +516,11 @@ def prediction():
             )
 
 
-        # -----------------------------------------
-        # BGR -> RGB
-        # -----------------------------------------
+        # =================================================
+        # BGR → RGB
+        # =================================================
 
-        rgb = cv2.cvtColor(
+        rgb_frame = cv2.cvtColor(
 
             frame,
 
@@ -514,127 +528,130 @@ def prediction():
         )
 
 
-        # -----------------------------------------
-        # MediaPipe Image
-        # -----------------------------------------
+        # =================================================
+        # MEDIAPIPE IMAGE
+        # =================================================
 
         mp_image = mp.Image(
 
             image_format=mp.ImageFormat.SRGB,
 
-            data=rgb
+            data=rgb_frame
         )
 
 
-        # -----------------------------------------
-        # Detect hand
-        # -----------------------------------------
+        # =================================================
+        # HAND DETECTION
+        # =================================================
 
         result = landmarker.detect(
             mp_image
         )
 
 
-        # -----------------------------------------
-        # No hand detected
-        # -----------------------------------------
+        # =================================================
+        # NO HAND
+        # =================================================
 
         if not result.hand_landmarks:
 
-            print(
-                "MediaPipe: No hand detected"
-            )
-
             return jsonify({
 
-                "label": "No Hand",
+                "success": True,
 
-                "gesture": "No Hand",
+                "label": "No Hand",
 
                 "emoji": "🤚",
 
                 "confidence": 0,
 
                 "landmarks": []
-
             })
 
 
-        # -----------------------------------------
-        # First hand
-        # -----------------------------------------
+        # =================================================
+        # FIRST HAND
+        # =================================================
 
         hand = result.hand_landmarks[0]
 
 
-        # -----------------------------------------
-        # Extract features
-        # -----------------------------------------
+        # =================================================
+        # EXTRACT FEATURES
+        # =================================================
 
         features = extract_landmarks(
             hand
         )
 
 
-        if features.size == 0:
+        # =================================================
+        # MODEL PREDICTION
+        # =================================================
 
-            return jsonify({
-
-                "label": "No Hand",
-
-                "gesture": "No Hand",
-
-                "emoji": "🤚",
-
-                "confidence": 0,
-
-                "landmarks": []
-
-            })
-
-
-        # -----------------------------------------
-        # ML Prediction
-        # -----------------------------------------
-
-        label = str(
-            model.predict(
-                [features]
-            )[0]
+        prediction_result = model.predict(
+            features.reshape(1, -1)
         )
 
 
-        # -----------------------------------------
-        # Confidence
-        # -----------------------------------------
+        raw_label = str(
+            prediction_result[0]
+        )
+
+
+        # =================================================
+        # CONFIDENCE
+        # =================================================
 
         confidence = 0.0
+
 
         if hasattr(
             model,
             "predict_proba"
         ):
 
-            probabilities = model.predict_proba(
-                [features]
-            )[0]
+            try:
 
-            confidence = (
-                float(
-                    np.max(
-                        probabilities
-                    )
-                ) * 100
-            )
+                probabilities = (
+                    model.predict_proba(
+                        features.reshape(1, -1)
+                    )[0]
+                )
 
 
-        # -----------------------------------------
-        # Landmarks for frontend
-        # -----------------------------------------
+                confidence = float(
+                    np.max(probabilities)
+                )
 
-        landmarks = [
 
-            {
+            except Exception as confidence_error:
+
+                print(
+                    "CONFIDENCE ERROR:",
+                    repr(confidence_error)
+                )
+
+                confidence = 0.0
+
+
+        # Convert 0-1 → 0-100
+        confidence_percent = (
+            confidence * 100
+        )
+
+
+        # =================================================
+        # LANDMARKS FOR FRONTEND
+        # =================================================
+
+        landmarks = []
+
+
+        for landmark in hand:
+
+            landmarks.append({
+
                 "x": float(
                     landmark.x
                 ),
@@ -642,76 +659,61 @@ def prediction():
                 "y": float(
                     landmark.y
                 )
-            }
-
-            for landmark in hand
-
-        ]
+            })
 
 
-        # -----------------------------------------
-        # Display label
-        # -----------------------------------------
-
-        display_label = label
-
-        if label == "Pointing":
-
-            display_label = "2 Fingers"
-
-        elif label in [
-            "One_Finger",
-            "One Finger"
-        ]:
-
-            display_label = "Pointing"
-
-
-        # -----------------------------------------
-        # Emoji
-        # -----------------------------------------
+        # =================================================
+        # EMOJI
+        # =================================================
 
         emoji = GESTURE_EMOJIS.get(
-
-            label,
-
+            raw_label,
             "🤚"
         )
 
 
-        # -----------------------------------------
-        # Final response
-        # -----------------------------------------
+        # =================================================
+        # FINAL RESPONSE
+        # =================================================
+
+        print(
+            "GESTURE:",
+            raw_label,
+            "| CONFIDENCE:",
+            round(
+                confidence_percent,
+                2
+            )
+        )
+
 
         return jsonify({
 
-            # Original model label
-            "label": label,
+            "success": True,
 
-            # Frontend-friendly display label
-            "gesture": display_label,
+            "label": raw_label,
+
+            "gesture": raw_label,
 
             "emoji": emoji,
 
-            "confidence": round(
-                confidence,
-                2
-            ),
+            "confidence": confidence_percent,
 
             "landmarks": landmarks
-
         })
 
 
     except Exception as e:
 
-        print("======================================")
-        print("Prediction error:")
-        print(str(e))
-        print("======================================")
+        print(
+            "PREDICTION ERROR:",
+            repr(e)
+        )
 
 
         return jsonify({
+
+            "success": False,
 
             "label": "Detection Error",
 
@@ -721,8 +723,9 @@ def prediction():
 
             "confidence": 0,
 
-            "landmarks": []
+            "landmarks": [],
 
+            "error": str(e)
         }), 500
 
 
@@ -739,11 +742,14 @@ if __name__ == "__main__":
         )
     )
 
+
     app.run(
 
         host="0.0.0.0",
 
         port=port,
 
-        debug=False
+        debug=False,
+
+        threaded=True
     )

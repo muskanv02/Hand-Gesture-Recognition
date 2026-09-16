@@ -10,45 +10,117 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>GestureAI | Live Recognition</title>
+    <title>
+        Live Recognition | GestureAI
+    </title>
 
-    <!-- Google Font -->
+
+    <!-- Google Fonts -->
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
 
+
     <!-- Font Awesome -->
+
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-    <!-- Main CSS -->
+
+    <!-- Main Project CSS -->
+
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='css/style.css') }}"
     >
+
+
+    <!-- Recognition Page CSS -->
+
+    <style>
+
+        .confidence-box {
+            margin-top: 18px;
+        }
+
+        .confidence-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 9px;
+        }
+
+        .confidence-track {
+
+            width: 100%;
+
+            height: 9px;
+
+            border-radius: 999px;
+
+            background: rgba(255,255,255,0.10);
+
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+
+            width: 0%;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7c3aed,
+                    #a855f7
+                );
+
+            transition:
+                width 0.35s ease;
+        }
+
+    </style>
 
 </head>
 
 
 <body>
 
-    <!-- ================= SIDEBAR ================= -->
+
+<div class="dashboard">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
     <aside class="sidebar">
 
         <div class="sidebar-logo">
 
-            <div class="logo-icon">
-                <i class="fa-solid fa-hand"></i>
-            </div>
-
-            <div>
-                <h2>GestureAI</h2>
-                <span>AI Recognition</span>
-            </div>
+            Gesture<span>AI</span>
 
         </div>
 
@@ -56,8 +128,13 @@
         <nav class="sidebar-menu">
 
             <a href="{{ url_for('home') }}">
+
                 <i class="fa-solid fa-house"></i>
-                <span>Home</span>
+
+                <span>
+                    Home
+                </span>
+
             </a>
 
 
@@ -65,32 +142,57 @@
                 href="{{ url_for('recognition') }}"
                 class="active"
             >
+
                 <i class="fa-solid fa-camera"></i>
-                <span>Live Recognition</span>
+
+                <span>
+                    Live Recognition
+                </span>
+
             </a>
 
 
             <a href="{{ url_for('how_it_works') }}">
+
                 <i class="fa-solid fa-microchip"></i>
-                <span>AI Technology</span>
+
+                <span>
+                    AI Technology
+                </span>
+
             </a>
 
 
             <a href="{{ url_for('analytics') }}">
-                <i class="fa-solid fa-chart-simple"></i>
-                <span>Analytics</span>
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span>
+                    Analytics
+                </span>
+
             </a>
 
 
             <a href="{{ url_for('about') }}">
+
                 <i class="fa-solid fa-circle-info"></i>
-                <span>About</span>
+
+                <span>
+                    About
+                </span>
+
             </a>
 
 
             <a href="{{ url_for('contact') }}">
+
                 <i class="fa-solid fa-envelope"></i>
-                <span>Contact</span>
+
+                <span>
+                    Contact
+                </span>
+
             </a>
 
         </nav>
@@ -98,11 +200,16 @@
 
         <div class="sidebar-bottom">
 
-            <div class="sidebar-status-dot"></div>
+            <div>
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                AI Gesture Recognition
+
+            </div>
 
             <div>
-                <strong>System Online</strong>
-                <span>AI Engine Ready</span>
+                Powered by MediaPipe
             </div>
 
         </div>
@@ -110,111 +217,123 @@
     </aside>
 
 
-    <!-- ================= MAIN ================= -->
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
 
     <main class="dashboard-main">
 
 
-        <!-- PAGE HEADER -->
+        <div class="inner-page-header">
 
-        <header class="inner-page-header">
-
-            <div>
-
-                <div class="page-label">
-                    <span></span>
-                    COMPUTER VISION
-                </div>
-
-                <h1>Live Gesture Recognition</h1>
-
-                <p>
-                    Show your hand to the camera and let AI recognize
-                    your gesture in real time.
-                </p>
-
-            </div>
-
-        </header>
-
-
-        <!-- ================= STATUS ================= -->
-
-        <div class="status-row">
-
-            <div class="status-item">
-
-                <span
-                    class="status-dot"
-                    id="mpStatus"
-                ></span>
-
-                <span>MediaPipe</span>
-
+            <div class="page-label">
+                LIVE CAMERA
             </div>
 
 
-            <div class="status-item">
+            <h1>
 
-                <span
-                    class="status-dot"
-                    id="modelStatus"
-                ></span>
+                Live Gesture
+                <span>
+                    Recognition
+                </span>
 
-                <span>ML Model</span>
-
-            </div>
+            </h1>
 
 
-            <div class="status-item">
+            <p>
 
-                <span
-                    class="status-dot"
-                    id="cameraStatus"
-                ></span>
+                Show your hand clearly in front of the camera.
+                GestureAI detects your hand gesture using computer vision,
+                MediaPipe and machine learning.
 
-                <span>Camera</span>
-
-            </div>
+            </p>
 
         </div>
 
 
-        <!-- ================= RECOGNITION LAYOUT ================= -->
 
-        <section class="recognition-layout">
+        <!-- =================================================
+             SYSTEM STATUS
+        ================================================== -->
+
+        <div class="status-row">
+
+            <span id="mpStatus">
+
+                <i class="fa-solid fa-circle"></i>
+
+                MediaPipe Checking...
+
+            </span>
 
 
-            <!-- ================= CAMERA ================= -->
+            <span id="modelStatus">
 
-            <div class="camera-card">
+                <i class="fa-solid fa-circle"></i>
+
+                Model Checking...
+
+            </span>
+
+
+            <span id="cameraStatus">
+
+                <i class="fa-solid fa-circle"></i>
+
+                Camera Checking...
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECOGNITION LAYOUT
+        ================================================== -->
+
+        <div class="recognition-layout">
+
+
+            <!-- =================================================
+                 CAMERA CARD
+            ================================================== -->
+
+            <section class="camera-card">
+
 
                 <div class="camera-header">
 
-                    <div>
+                    <h2>
 
-                        <span class="camera-label">
-                            LIVE CAMERA
-                        </span>
+                        <i class="fa-solid fa-video"></i>
 
-                        <h2>Hand Detection</h2>
+                        Live Camera Feed
 
-                    </div>
+                    </h2>
 
 
-                    <div class="camera-status">
+                    <div
+                        class="camera-status"
+                        id="cameraLiveStatus"
+                    >
 
-                        <span></span>
-                        Ready
+                        <i class="fa-solid fa-circle"></i>
+
+                        Camera Inactive
 
                     </div>
 
                 </div>
 
 
-                <!-- CAMERA AREA -->
 
-                <div class="video-wrap">
+                <div
+                    class="video-wrap"
+                    id="videoWrap"
+                >
 
                     <video
                         id="cameraVideo"
@@ -230,36 +349,38 @@
 
 
                     <div
-                        class="camera-message"
                         id="cameraMessage"
+                        class="camera-message"
                     >
 
-                        <div class="camera-message-icon">
-                            <i class="fa-solid fa-camera"></i>
-                        </div>
+                        <i class="fa-solid fa-camera"></i>
 
-                        <h3>Camera is Off</h3>
+                        <span>
 
-                        <p>
-                            Click Start Camera to begin recognition.
-                        </p>
+                            Click
+                            <b>
+                                Start Camera
+                            </b>
+                            to begin recognition.
+
+                        </span>
 
                     </div>
 
                 </div>
 
 
-                <!-- CAMERA CONTROLS -->
 
                 <div class="camera-controls">
 
+
                     <button
-                        id="startBtn"
+                        id="startCameraBtn"
                         class="primary-btn"
                         type="button"
                     >
 
-                        <i class="fa-solid fa-video"></i>
+                        <i class="fa-solid fa-camera"></i>
 
                         Start Camera
 
@@ -267,7 +388,7 @@
 
 
                     <button
-                        id="stopBtn"
+                        id="stopCameraBtn"
                         class="secondary-btn"
                         type="button"
                         disabled
@@ -279,32 +400,45 @@
 
                     </button>
 
+
                 </div>
 
 
-                <p class="hint">
 
-                    <i class="fa-solid fa-lightbulb"></i>
+                <div class="hint">
 
-                    Keep your hand clearly visible inside the camera
-                    frame for better accuracy.
+                    <i class="fa-regular fa-lightbulb"></i>
 
-                </p>
+                    <span>
 
-            </div>
+                        Keep your complete hand inside the frame
+                        • Good lighting gives better results
 
+                    </span>
 
-            <!-- ================= RESULT SIDE ================= -->
-
-            <div class="recognition-side">
+                </div>
 
 
-                <!-- GESTURE RESULT -->
+            </section>
+
+
+
+            <!-- =================================================
+                 RIGHT SIDE
+            ================================================== -->
+
+            <aside class="recognition-side">
+
+
+                <!-- DETECTED GESTURE -->
 
                 <div class="gesture-card">
 
+
                     <div class="gesture-card-label">
+
                         DETECTED GESTURE
+
                     </div>
 
 
@@ -316,29 +450,33 @@
                     </div>
 
 
-                    <h2
+                    <div
                         class="gesture-name"
                         id="gestureName"
                     >
                         No Hand
-                    </h2>
+                    </div>
 
 
-                    <p
+                    <div
                         class="gesture-description"
                         id="gestureDescription"
                     >
-                        Waiting for hand detection...
-                    </p>
+                        Waiting for gesture...
+                    </div>
 
 
-                    <!-- CONFIDENCE -->
 
-                    <div class="confidence-box">
+                    <div
+                        class="confidence-box"
+                        id="confidenceBox"
+                    >
 
                         <div class="confidence-header">
 
-                            <span>Confidence</span>
+                            <span>
+                                Confidence
+                            </span>
 
                             <strong id="confidenceValue">
                                 0%
@@ -347,29 +485,50 @@
                         </div>
 
 
-                        <div class="confidence-bar">
+                        <div class="confidence-track">
 
                             <div
-                                id="confidenceFill"
+                                id="confidenceBar"
                                 class="confidence-fill"
-                                style="width: 0%;"
                             ></div>
 
                         </div>
 
                     </div>
 
+
                 </div>
 
 
-                <!-- TIPS -->
+
+                <!-- RECOGNITION TIPS -->
 
                 <div class="tips-card">
 
+
                     <h3>
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                        <i
+                            class="fa-solid fa-wand-magic-sparkles"
+                        ></i>
+
                         Recognition Tips
+
                     </h3>
+
+
+                    <div class="tip">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        <span>
+
+                            Keep your complete hand visible
+                            inside the camera frame.
+
+                        </span>
+
+                    </div>
 
 
                     <div class="tip">
@@ -377,7 +536,10 @@
                         <i class="fa-solid fa-sun"></i>
 
                         <span>
-                            Use good lighting
+
+                            Use good lighting for accurate
+                            gesture detection.
+
                         </span>
 
                     </div>
@@ -388,7 +550,10 @@
                         <i class="fa-solid fa-hand"></i>
 
                         <span>
-                            Keep your full hand visible
+
+                            Keep only one hand in front
+                            of the camera.
+
                         </span>
 
                     </div>
@@ -396,1162 +561,1507 @@
 
                     <div class="tip">
 
-                        <i class="fa-solid fa-arrows-up-down-left-right"></i>
+                        <i
+                            class="fa-solid fa-arrows-to-circle"
+                        ></i>
 
                         <span>
-                            Keep your hand steady
+
+                            Keep your hand steady while
+                            making a gesture.
+
                         </span>
 
                     </div>
 
-
-                    <div class="tip">
-
-                        <i class="fa-solid fa-camera"></i>
-
-                        <span>
-                            Face the camera directly
-                        </span>
-
-                    </div>
 
                 </div>
 
-            </div>
 
-        </section>
+            </aside>
 
 
-        <!-- ================= FOOTER ================= -->
+        </div>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
 
         <footer class="dashboard-footer">
 
-            <span>
-                GestureAI • AI Powered Hand Gesture Recognition
-            </span>
+            © 2026 GestureAI • AI Powered Hand Gesture Recognition
 
         </footer>
+
 
     </main>
 
 
-
-    <!-- ================= JAVASCRIPT ================= -->
-
-    <script>
-
-        document.addEventListener("DOMContentLoaded", () => {
+</div>
 
 
-            /* =========================================
-               DOM ELEMENTS
-            ========================================= */
 
-            const video =
-                document.getElementById("cameraVideo");
+<!-- =========================================================
+     COMMON JAVASCRIPT
+========================================================== -->
 
-            const canvas =
-                document.getElementById("landmarkCanvas");
-
-            const ctx =
-                canvas.getContext("2d");
-
-            const startBtn =
-                document.getElementById("startBtn");
-
-            const stopBtn =
-                document.getElementById("stopBtn");
-
-            const cameraMessage =
-                document.getElementById("cameraMessage");
-
-            const mpStatus =
-                document.getElementById("mpStatus");
-
-            const modelStatus =
-                document.getElementById("modelStatus");
-
-            const cameraStatus =
-                document.getElementById("cameraStatus");
-
-            const gestureIcon =
-                document.getElementById("gestureIcon");
-
-            const gestureName =
-                document.getElementById("gestureName");
-
-            const gestureDescription =
-                document.getElementById("gestureDescription");
-
-            const confidenceValue =
-                document.getElementById("confidenceValue");
-
-            const confidenceFill =
-                document.getElementById("confidenceFill");
+<script
+    src="{{ url_for('static', filename='js/script.js') }}"
+    defer
+></script>
 
 
-            /* =========================================
-               VARIABLES
-            ========================================= */
 
-            let stream = null;
+<!-- =========================================================
+     RECOGNITION JAVASCRIPT
+========================================================== -->
 
-            let predictionInterval = null;
+<script>
 
-            let processing = false;
+(() => {
 
-
-            /*
-             * IMPORTANT FOR RENDER
-             *
-             * Old:
-             * 250ms = 4 requests/sec
-             *
-             * New:
-             * 700ms ≈ 1.4 requests/sec
-             *
-             * This reduces server memory/CPU pressure.
-             */
-
-            const PREDICTION_INTERVAL = 700;
+    "use strict";
 
 
-            /* =========================================
-               STATUS
-            ========================================= */
+    // =====================================================
+    // ELEMENTS
+    // =====================================================
 
-            function setStatus(element, active) {
-
-                if (!element) return;
-
-                if (active) {
-
-                    element.classList.add("active");
-
-                } else {
-
-                    element.classList.remove("active");
-
-                }
-
-            }
+    const video =
+        document.getElementById(
+            "cameraVideo"
+        );
 
 
-            /* =========================================
-               CHECK BACKEND STATUS
-            ========================================= */
-
-            async function checkStatus() {
-
-                try {
-
-                    const response =
-                        await fetch("/status", {
-                            cache: "no-store"
-                        });
+    const canvas =
+        document.getElementById(
+            "landmarkCanvas"
+        );
 
 
-                    if (!response.ok) {
+    const ctx =
+        canvas.getContext("2d");
 
-                        throw new Error(
-                            "Status request failed"
-                        );
 
+    const startBtn =
+        document.getElementById(
+            "startCameraBtn"
+        );
+
+
+    const stopBtn =
+        document.getElementById(
+            "stopCameraBtn"
+        );
+
+
+    const cameraMessage =
+        document.getElementById(
+            "cameraMessage"
+        );
+
+
+    const cameraLiveStatus =
+        document.getElementById(
+            "cameraLiveStatus"
+        );
+
+
+    const gestureIcon =
+        document.getElementById(
+            "gestureIcon"
+        );
+
+
+    const gestureName =
+        document.getElementById(
+            "gestureName"
+        );
+
+
+    const gestureDescription =
+        document.getElementById(
+            "gestureDescription"
+        );
+
+
+    const confidenceValue =
+        document.getElementById(
+            "confidenceValue"
+        );
+
+
+    const confidenceBar =
+        document.getElementById(
+            "confidenceBar"
+        );
+
+
+
+    // =====================================================
+    // VARIABLES
+    // =====================================================
+
+    let stream = null;
+
+    let predictionTimer = null;
+
+    let processing = false;
+
+    let cameraRunning = false;
+
+
+    // One request approximately every 1.2 seconds.
+    // This reduces Render CPU/RAM pressure.
+
+    const PREDICTION_INTERVAL = 1200;
+
+
+
+    // =====================================================
+    // GESTURE DISPLAY MAPPING
+    // =====================================================
+
+    const gestureMap = {
+
+        "Open_Palm": {
+            name: "Open Palm",
+            emoji: "🖐️"
+        },
+
+        "Open Palm": {
+            name: "Open Palm",
+            emoji: "🖐️"
+        },
+
+        "Fist": {
+            name: "Fist",
+            emoji: "✊"
+        },
+
+        "Thumbs_Up": {
+            name: "Thumbs Up",
+            emoji: "👍"
+        },
+
+        "Thumbs Up": {
+            name: "Thumbs Up",
+            emoji: "👍"
+        },
+
+        "Thumbs_Down": {
+            name: "Thumbs Down",
+            emoji: "👎"
+        },
+
+        "Thumbs Down": {
+            name: "Thumbs Down",
+            emoji: "👎"
+        },
+
+        "Peace": {
+            name: "Peace",
+            emoji: "✌️"
+        },
+
+        "OK": {
+            name: "OK",
+            emoji: "👌"
+        },
+
+        /*
+         * IMPORTANT:
+         *
+         * Model label "Pointing"
+         * is displayed as "2 Fingers"
+         */
+
+        "Pointing": {
+            name: "2 Fingers",
+            emoji: "✌️"
+        },
+
+
+        /*
+         * Model label "One_Finger"
+         * is displayed as "Pointing"
+         */
+
+        "One_Finger": {
+            name: "Pointing",
+            emoji: "☝️"
+        },
+
+        "One Finger": {
+            name: "Pointing",
+            emoji: "☝️"
+        },
+
+        "OneFinger": {
+            name: "Pointing",
+            emoji: "☝️"
+        },
+
+
+        "Love": {
+            name: "Love",
+            emoji: "🤟"
+        },
+
+        "Rock": {
+            name: "Rock",
+            emoji: "🤘"
+        }
+
+    };
+
+
+
+    // =====================================================
+    // STATUS
+    // =====================================================
+
+    function setStatus(
+        id,
+        text,
+        state = "normal"
+    ) {
+
+        const element =
+            document.getElementById(id);
+
+
+        if (!element) {
+            return;
+        }
+
+
+        element.innerHTML =
+            '<i class="fa-solid fa-circle"></i> '
+            + text;
+
+
+        const icon =
+            element.querySelector("i");
+
+
+        if (!icon) {
+            return;
+        }
+
+
+        icon.classList.remove(
+            "active",
+            "error"
+        );
+
+
+        if (state === "active") {
+
+            icon.classList.add(
+                "active"
+            );
+
+        }
+
+
+        if (state === "error") {
+
+            icon.classList.add(
+                "error"
+            );
+
+        }
+
+    }
+
+
+
+    // =====================================================
+    // CHECK BACKEND
+    // =====================================================
+
+    async function checkBackendStatus() {
+
+        try {
+
+            const response =
+                await fetch(
+                    "/status",
+                    {
+                        cache: "no-store"
                     }
+                );
 
 
-                    const data =
-                        await response.json();
+            if (!response.ok) {
 
-
-                    setStatus(
-                        mpStatus,
-                        !!data.mediapipe
-                    );
-
-
-                    setStatus(
-                        modelStatus,
-                        !!data.model_loaded
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Status Error:",
-                        error
-                    );
-
-
-                    setStatus(
-                        mpStatus,
-                        false
-                    );
-
-
-                    setStatus(
-                        modelStatus,
-                        false
-                    );
-
-                }
+                throw new Error(
+                    "Backend status failed"
+                );
 
             }
 
 
-            /* =========================================
-               RESIZE CANVAS
-            ========================================= */
+            const data =
+                await response.json();
 
-            function resizeCanvas() {
 
-                if (!video.videoWidth ||
-                    !video.videoHeight) {
+            // MediaPipe
+
+            if (data.mediapipe) {
+
+                setStatus(
+                    "mpStatus",
+                    "MediaPipe Ready",
+                    "active"
+                );
+
+            } else {
+
+                setStatus(
+                    "mpStatus",
+                    "MediaPipe Error",
+                    "error"
+                );
+
+            }
+
+
+            // Model
+
+            if (data.model_loaded) {
+
+                setStatus(
+                    "modelStatus",
+                    "Model Ready",
+                    "active"
+                );
+
+            } else {
+
+                setStatus(
+                    "modelStatus",
+                    "Model Not Loaded",
+                    "error"
+                );
+
+            }
+
+
+            // Camera
+
+            if (cameraRunning) {
+
+                setStatus(
+                    "cameraStatus",
+                    "Camera Active",
+                    "active"
+                );
+
+            } else {
+
+                setStatus(
+                    "cameraStatus",
+                    "Browser Camera Ready",
+                    "normal"
+                );
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Status error:",
+                error
+            );
+
+
+            setStatus(
+                "mpStatus",
+                "Backend Unavailable",
+                "error"
+            );
+
+
+            setStatus(
+                "modelStatus",
+                "Backend Unavailable",
+                "error"
+            );
+
+
+            setStatus(
+                "cameraStatus",
+                "Browser Camera",
+                "normal"
+            );
+
+        }
+
+    }
+
+
+
+    // =====================================================
+    // CANVAS SIZE
+    // =====================================================
+
+    function resizeCanvas() {
+
+        if (
+            video.videoWidth &&
+            video.videoHeight
+        ) {
+
+            canvas.width =
+                video.videoWidth;
+
+            canvas.height =
+                video.videoHeight;
+
+        } else {
+
+            canvas.width = 640;
+
+            canvas.height = 480;
+
+        }
+
+    }
+
+
+
+    // =====================================================
+    // LANDMARK CONNECTIONS
+    // =====================================================
+
+    const connections = [
+
+        [0, 1],
+        [1, 2],
+        [2, 3],
+        [3, 4],
+
+        [0, 5],
+        [5, 6],
+        [6, 7],
+        [7, 8],
+
+        [5, 9],
+        [9, 10],
+        [10, 11],
+        [11, 12],
+
+        [9, 13],
+        [13, 14],
+        [14, 15],
+        [15, 16],
+
+        [13, 17],
+        [17, 18],
+        [18, 19],
+        [19, 20],
+
+        [0, 17]
+
+    ];
+
+
+
+    // =====================================================
+    // DRAW LANDMARKS
+    // =====================================================
+
+    function drawLandmarks(
+        points
+    ) {
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        if (
+            !Array.isArray(points) ||
+            points.length !== 21
+        ) {
+
+            return;
+
+        }
+
+
+        // -------------------------
+        // Connections
+        // -------------------------
+
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+
+
+        connections.forEach(
+            ([a, b]) => {
+
+                if (
+                    !points[a] ||
+                    !points[b]
+                ) {
 
                     return;
 
                 }
 
 
-                canvas.width =
-                    video.videoWidth;
+                ctx.moveTo(
 
-                canvas.height =
-                    video.videoHeight;
-
-            }
-
-
-            /* =========================================
-               LANDMARK CONNECTIONS
-            ========================================= */
-
-            const connections = [
-
-                [0, 1],
-                [1, 2],
-                [2, 3],
-                [3, 4],
-
-                [0, 5],
-                [5, 6],
-                [6, 7],
-                [7, 8],
-
-                [0, 9],
-                [9, 10],
-                [10, 11],
-                [11, 12],
-
-                [0, 13],
-                [13, 14],
-                [14, 15],
-                [15, 16],
-
-                [0, 17],
-                [17, 18],
-                [18, 19],
-                [19, 20],
-
-                [5, 9],
-                [9, 13],
-                [13, 17]
-
-            ];
-
-
-            /* =========================================
-               DRAW LANDMARKS
-            ========================================= */
-
-            function drawLandmarks(points) {
-
-                ctx.clearRect(
-                    0,
-                    0,
+                    points[a].x *
                     canvas.width,
+
+                    points[a].y *
                     canvas.height
+
                 );
 
 
-                if (!Array.isArray(points) ||
-                    points.length !== 21) {
+                ctx.lineTo(
 
-                    return;
+                    points[b].x *
+                    canvas.width,
 
-                }
+                    points[b].y *
+                    canvas.height
 
+                );
 
-                /*
-                 * Draw skeleton
-                 */
-
-                ctx.lineWidth = 2;
-
-                ctx.strokeStyle =
-                    "#9b91ff";
+            }
+        );
 
 
-                connections.forEach(
-                    ([start, end]) => {
-
-                        const p1 =
-                            points[start];
-
-                        const p2 =
-                            points[end];
+        ctx.stroke();
 
 
-                        if (!p1 || !p2) return;
+
+        // -------------------------
+        // Landmark points
+        // -------------------------
+
+        points.forEach(
+            point => {
+
+                ctx.beginPath();
 
 
-                        ctx.beginPath();
+                ctx.arc(
 
-                        ctx.moveTo(
-                            p1.x * canvas.width,
-                            p1.y * canvas.height
-                        );
+                    point.x *
+                    canvas.width,
 
-                        ctx.lineTo(
-                            p2.x * canvas.width,
-                            p2.y * canvas.height
-                        );
+                    point.y *
+                    canvas.height,
 
-                        ctx.stroke();
+                    5,
+
+                    0,
+
+                    Math.PI * 2
+
+                );
+
+
+                ctx.fill();
+
+            }
+        );
+
+    }
+
+
+
+    // =====================================================
+    // RESET RESULT
+    // =====================================================
+
+    function resetGesture() {
+
+        gestureIcon.textContent =
+            "🤚";
+
+
+        gestureName.textContent =
+            "No Hand";
+
+
+        gestureDescription.textContent =
+            "Waiting for gesture...";
+
+
+        confidenceValue.textContent =
+            "0%";
+
+
+        confidenceBar.style.width =
+            "0%";
+
+
+        drawLandmarks([]);
+
+    }
+
+
+
+    // =====================================================
+    // NO HAND
+    // =====================================================
+
+    function showNoHand() {
+
+        gestureIcon.textContent =
+            "🤚";
+
+
+        gestureName.textContent =
+            "No Hand";
+
+
+        gestureDescription.textContent =
+            "Show your hand clearly in front of the camera.";
+
+
+        confidenceValue.textContent =
+            "0%";
+
+
+        confidenceBar.style.width =
+            "0%";
+
+
+        drawLandmarks([]);
+
+    }
+
+
+
+    // =====================================================
+    // DETECTION ERROR
+    // =====================================================
+
+    function showDetectionError(
+        message
+    ) {
+
+        gestureIcon.textContent =
+            "⚠️";
+
+
+        gestureName.textContent =
+            "Detection Error";
+
+
+        gestureDescription.textContent =
+            message ||
+            "Unable to recognize gesture.";
+
+
+        confidenceValue.textContent =
+            "0%";
+
+
+        confidenceBar.style.width =
+            "0%";
+
+
+        drawLandmarks([]);
+
+    }
+
+
+
+    // =====================================================
+    // UPDATE GESTURE
+    // =====================================================
+
+    function updateGesture(
+        data
+    ) {
+
+        if (!data) {
+            return;
+        }
+
+
+        const rawLabel = String(
+
+            data.label ||
+            data.gesture ||
+            "No Hand"
+
+        ).trim();
+
+
+
+        // -------------------------
+        // No Hand
+        // -------------------------
+
+        if (
+            rawLabel === "No Hand"
+        ) {
+
+            showNoHand();
+
+            return;
+
+        }
+
+
+
+        // -------------------------
+        // Error
+        // -------------------------
+
+        if (
+            data.success === false ||
+            rawLabel === "Detection Error" ||
+            rawLabel === "MediaPipe Error" ||
+            rawLabel === "Model Error"
+        ) {
+
+            showDetectionError(
+                data.error
+            );
+
+            return;
+
+        }
+
+
+
+        // -------------------------
+        // Find display mapping
+        // -------------------------
+
+        const mapped =
+            gestureMap[rawLabel];
+
+
+
+        let displayName =
+            rawLabel.replaceAll(
+                "_",
+                " "
+            );
+
+
+        let displayEmoji =
+            data.emoji ||
+            "🤚";
+
+
+        if (mapped) {
+
+            displayName =
+                mapped.name;
+
+            displayEmoji =
+                mapped.emoji;
+
+        }
+
+
+
+        // -------------------------
+        // Confidence
+        // -------------------------
+
+        let confidence =
+            Number(
+                data.confidence || 0
+            );
+
+
+        // Backend sends percentage.
+        // But this also supports 0-1 values.
+
+        if (
+            confidence >= 0 &&
+            confidence <= 1
+        ) {
+
+            confidence =
+                confidence * 100;
+
+        }
+
+
+        confidence =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    confidence
+                )
+            );
+
+
+        // -------------------------
+        // Update UI
+        // -------------------------
+
+        gestureIcon.textContent =
+            displayEmoji;
+
+
+        gestureName.textContent =
+            displayName;
+
+
+        confidenceValue.textContent =
+            Math.round(
+                confidence
+            ) + "%";
+
+
+        confidenceBar.style.width =
+            confidence + "%";
+
+
+        gestureDescription.textContent =
+            "Gesture detected successfully.";
+
+
+        // -------------------------
+        // Draw landmarks
+        // -------------------------
+
+        drawLandmarks(
+            data.landmarks || []
+        );
+
+    }
+
+
+
+    // =====================================================
+    // PREDICT ONE FRAME
+    // =====================================================
+
+    async function predictFrame() {
+
+        if (
+            !cameraRunning ||
+            processing ||
+            !stream ||
+            video.readyState < 2
+        ) {
+
+            return;
+
+        }
+
+
+        processing = true;
+
+
+        try {
+
+            resizeCanvas();
+
+
+
+            // ---------------------------------------------
+            // Temporary canvas
+            // ---------------------------------------------
+
+            const tempCanvas =
+                document.createElement(
+                    "canvas"
+                );
+
+
+            const tempContext =
+                tempCanvas.getContext(
+                    "2d"
+                );
+
+
+            const sourceWidth =
+                video.videoWidth ||
+                640;
+
+
+            const sourceHeight =
+                video.videoHeight ||
+                480;
+
+
+
+            // Keep request reasonably small
+            const maxWidth = 640;
+
+
+            const scale =
+                Math.min(
+                    1,
+                    maxWidth /
+                    sourceWidth
+                );
+
+
+            const targetWidth =
+                Math.round(
+                    sourceWidth * scale
+                );
+
+
+            const targetHeight =
+                Math.round(
+                    sourceHeight * scale
+                );
+
+
+            tempCanvas.width =
+                targetWidth;
+
+
+            tempCanvas.height =
+                targetHeight;
+
+
+
+            // ---------------------------------------------
+            // Draw video
+            // ---------------------------------------------
+
+            tempContext.drawImage(
+
+                video,
+
+                0,
+                0,
+
+                targetWidth,
+                targetHeight
+
+            );
+
+
+
+            // ---------------------------------------------
+            // JPEG
+            // ---------------------------------------------
+
+            const image =
+                tempCanvas.toDataURL(
+                    "image/jpeg",
+                    0.70
+                );
+
+
+
+            // ---------------------------------------------
+            // Send to Flask
+            // ---------------------------------------------
+
+            const response =
+                await fetch(
+                    "/prediction",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                image: image
+                            })
 
                     }
                 );
 
 
-                /*
-                 * Draw points
-                 */
 
-                points.forEach(point => {
+            // ---------------------------------------------
+            // Parse response
+            // ---------------------------------------------
 
-                    if (!point) return;
-
-
-                    const x =
-                        point.x * canvas.width;
-
-                    const y =
-                        point.y * canvas.height;
+            const data =
+                await response.json();
 
 
-                    ctx.beginPath();
 
-                    ctx.arc(
-                        x,
-                        y,
-                        4,
-                        0,
-                        Math.PI * 2
-                    );
+            if (!response.ok) {
+
+                throw new Error(
+
+                    data.error ||
+                    data.label ||
+                    "Prediction request failed."
+
+                );
+
+            }
 
 
-                    ctx.fillStyle =
-                        "#ffffff";
 
-                    ctx.fill();
+            // ---------------------------------------------
+            // Update UI
+            // ---------------------------------------------
+
+            updateGesture(
+                data
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Prediction error:",
+                error
+            );
+
+
+            showDetectionError(
+                error.message
+            );
+
+
+        } finally {
+
+            processing = false;
+
+        }
+
+    }
+
+
+
+    // =====================================================
+    // SCHEDULE PREDICTION
+    // =====================================================
+
+    function schedulePrediction() {
+
+        if (!cameraRunning) {
+            return;
+        }
+
+
+        if (predictionTimer) {
+
+            clearTimeout(
+                predictionTimer
+            );
+
+        }
+
+
+        predictionTimer =
+            setTimeout(
+                async () => {
+
+                    await predictFrame();
+
+
+                    if (cameraRunning) {
+
+                        schedulePrediction();
+
+                    }
+
+                },
+                PREDICTION_INTERVAL
+            );
+
+    }
+
+
+
+    // =====================================================
+    // START CAMERA
+    // =====================================================
+
+    async function startCamera() {
+
+        // Prevent duplicate camera streams
+
+        if (cameraRunning) {
+            return;
+        }
+
+
+
+        // Browser support
+
+        if (
+            !navigator.mediaDevices ||
+            !navigator.mediaDevices.getUserMedia
+        ) {
+
+            cameraMessage.style.display =
+                "flex";
+
+
+            cameraMessage.innerHTML =
+
+                '<i class="fa-solid fa-triangle-exclamation"></i>' +
+
+                '<span>' +
+                'Your browser does not support camera access.' +
+                '</span>';
+
+
+            setStatus(
+                "cameraStatus",
+                "Camera Not Supported",
+                "error"
+            );
+
+
+            return;
+
+        }
+
+
+
+        try {
+
+            // ---------------------------------------------
+            // Camera permission
+            // ---------------------------------------------
+
+            stream =
+                await navigator.mediaDevices.getUserMedia({
+
+                    video: {
+
+                        facingMode: "user",
+
+                        width: {
+                            ideal: 640
+                        },
+
+                        height: {
+                            ideal: 480
+                        },
+
+                        frameRate: {
+                            ideal: 20,
+                            max: 20
+                        }
+
+                    },
+
+                    audio: false
 
                 });
 
-            }
 
 
-            /* =========================================
-               UPDATE GESTURE RESULT
-            ========================================= */
+            // ---------------------------------------------
+            // Attach stream
+            // ---------------------------------------------
 
-            function updateGesture(
-                gesture,
-                confidence
-            ) {
+            video.srcObject =
+                stream;
 
-                let cleanGesture =
-                    String(
-                        gesture || "No Hand"
-                    ).replaceAll(
-                        "_",
-                        " "
-                    );
 
+            await video.play();
 
-                /*
-                 * Normalize text
-                 */
 
-                cleanGesture =
-                    cleanGesture.trim();
 
+            cameraRunning = true;
 
-                /*
-                 * Gesture icons
-                 */
 
-                const icons = {
 
-                    "Open Palm": "✋",
+            // ---------------------------------------------
+            // UI
+            // ---------------------------------------------
 
-                    "Fist": "✊",
+            cameraMessage.style.display =
+                "none";
 
-                    "Thumbs Up": "👍",
 
-                    "Thumbs Down": "👎",
+            startBtn.disabled =
+                true;
 
-                    "Peace": "✌️",
 
-                    "OK": "👌",
+            stopBtn.disabled =
+                false;
 
-                    "Love": "🤟",
 
-                    "Rock": "🤘",
 
-                    "No Hand": "🤚",
+            cameraLiveStatus.innerHTML =
 
-                    /*
-                     * Required mapping:
-                     *
-                     * Pointing -> 2 Fingers
-                     */
+                '<i class="fa-solid fa-circle"></i>' +
+                ' Camera Active';
 
-                    "Pointing": "✌️",
 
-                    /*
-                     * One Finger -> Pointing
-                     */
 
-                    "One Finger": "☝️"
+            setStatus(
+                "cameraStatus",
+                "Camera Active",
+                "active"
+            );
 
-                };
 
 
-                /*
-                 * Required display names
-                 */
+            resizeCanvas();
 
-                let displayName =
-                    cleanGesture;
 
+            resetGesture();
 
-                if (
-                    cleanGesture.toLowerCase()
-                    === "pointing"
-                ) {
 
-                    displayName =
-                        "2 Fingers";
 
-                }
+            // ---------------------------------------------
+            // Start prediction loop
+            // ---------------------------------------------
 
+            schedulePrediction();
 
-                if (
-                    cleanGesture.toLowerCase()
-                    === "one finger"
-                ) {
 
-                    displayName =
-                        "Pointing";
 
-                }
+        } catch (error) {
 
+            console.error(
+                "Camera error:",
+                error
+            );
 
-                /*
-                 * Icon
-                 */
 
-                let icon =
-                    icons[cleanGesture] ||
-                    "🤚";
+            cameraRunning =
+                false;
 
 
-                if (
-                    cleanGesture.toLowerCase()
-                    === "pointing"
-                ) {
+            stream =
+                null;
 
-                    icon = "✌️";
 
-                }
+            cameraMessage.style.display =
+                "flex";
 
 
-                if (
-                    cleanGesture.toLowerCase()
-                    === "one finger"
-                ) {
+            cameraMessage.innerHTML =
 
-                    icon = "☝️";
+                '<i class="fa-solid fa-triangle-exclamation"></i>' +
 
-                }
+                '<span>' +
 
+                'Camera permission was denied or the camera is unavailable.' +
 
-                /*
-                 * Update UI
-                 */
+                '<br>' +
 
-                gestureIcon.textContent =
-                    icon;
+                'Please allow camera access and try again.' +
 
-                gestureName.textContent =
-                    displayName;
+                '</span>';
 
 
-                /*
-                 * Description
-                 */
+            setStatus(
+                "cameraStatus",
+                "Camera Permission Required",
+                "error"
+            );
 
-                if (
-                    cleanGesture.toLowerCase()
-                    === "no hand"
-                ) {
+        }
 
-                    gestureDescription.textContent =
-                        "Waiting for hand detection...";
+    }
 
-                } else {
 
-                    gestureDescription.textContent =
-                        "Gesture detected successfully.";
 
-                }
+    // =====================================================
+    // STOP CAMERA
+    // =====================================================
 
+    function stopCamera() {
 
-                /* =====================================
-                   CONFIDENCE
-                ===================================== */
+        cameraRunning =
+            false;
 
-                let value =
-                    Number(confidence);
 
+        processing =
+            false;
 
-                /*
-                 * Backend may return:
-                 *
-                 * 0.95
-                 * OR
-                 * 95
-                 */
 
-                if (
-                    value > 0 &&
-                    value <= 1
-                ) {
 
-                    value *= 100;
+        // ---------------------------------------------
+        // Stop prediction timer
+        // ---------------------------------------------
 
-                }
+        if (predictionTimer) {
 
+            clearTimeout(
+                predictionTimer
+            );
 
-                /*
-                 * Protect against invalid values
-                 */
+            predictionTimer =
+                null;
 
-                if (!Number.isFinite(value)) {
+        }
 
-                    value = 0;
 
-                }
 
+        // ---------------------------------------------
+        // Stop camera tracks
+        // ---------------------------------------------
 
-                value =
-                    Math.max(
-                        0,
-                        Math.min(
-                            100,
-                            value
-                        )
-                    );
+        if (stream) {
 
-
-                value =
-                    Math.round(value);
-
-
-                /*
-                 * Text
-                 */
-
-                confidenceValue.textContent =
-                    `${value}%`;
-
-
-                /*
-                 * Progress bar
-                 */
-
-                confidenceFill.style.width =
-                    `${value}%`;
-
-            }
-
-
-            /* =========================================
-               PREDICT
-            ========================================= */
-
-            async function predict() {
-
-
-                /*
-                 * Don't send multiple requests
-                 * at the same time.
-                 */
-
-                if (processing) return;
-
-
-                if (!stream) return;
-
-
-                if (
-                    video.readyState <
-                    HTMLMediaElement.HAVE_CURRENT_DATA
-                ) {
-
-                    return;
-
-                }
-
-
-                processing = true;
-
-
-                try {
-
-
-                    /* =================================
-                       CREATE SMALL IMAGE
-                    ================================= */
-
-                    const tempCanvas =
-                        document.createElement(
-                            "canvas"
-                        );
-
-
-                    const maxWidth = 480;
-
-
-                    const scale =
-                        Math.min(
-                            1,
-                            maxWidth /
-                            video.videoWidth
-                        );
-
-
-                    tempCanvas.width =
-                        Math.round(
-                            video.videoWidth *
-                            scale
-                        );
-
-
-                    tempCanvas.height =
-                        Math.round(
-                            video.videoHeight *
-                            scale
-                        );
-
-
-                    const tempCtx =
-                        tempCanvas.getContext(
-                            "2d"
-                        );
-
-
-                    tempCtx.drawImage(
-                        video,
-                        0,
-                        0,
-                        tempCanvas.width,
-                        tempCanvas.height
-                    );
-
-
-                    /*
-                     * Lower JPEG quality
-                     * = less upload size
-                     * = less server pressure
-                     */
-
-                    const image =
-                        tempCanvas.toDataURL(
-                            "image/jpeg",
-                            0.65
-                        );
-
-
-                    /* =================================
-                       SEND TO FLASK
-                    ================================= */
-
-                    const response =
-                        await fetch(
-                            "/prediction",
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-
-                                body:
-                                    JSON.stringify({
-                                        image: image
-                                    })
-                            }
-                        );
-
-
-                    /*
-                     * Read text first.
-                     *
-                     * This prevents:
-                     * Unexpected end of JSON input
-                     */
-
-                    const responseText =
-                        await response.text();
-
-
-                    if (!response.ok) {
-
-                        console.error(
-                            "Prediction HTTP Error:",
-                            response.status,
-                            responseText
-                        );
-
-
-                        throw new Error(
-                            `Server error ${response.status}`
-                        );
-
-                    }
-
-
-                    if (
-                        !responseText.trim()
-                    ) {
-
-                        throw new Error(
-                            "Server returned an empty response."
-                        );
-
-                    }
-
-
-                    let data;
-
-
-                    try {
-
-                        data =
-                            JSON.parse(
-                                responseText
-                            );
-
-                    } catch (jsonError) {
-
-                        console.error(
-                            "Invalid JSON from server:",
-                            responseText
-                        );
-
-
-                        throw new Error(
-                            "Server returned invalid JSON."
-                        );
-
-                    }
-
-
-                    /* =================================
-                       UPDATE RESULT
-                    ================================= */
-
-                    updateGesture(
-                        data.gesture ||
-                        data.label ||
-                        "No Hand",
-
-                        data.confidence ||
-                        0
-                    );
-
-
-                    /* =================================
-                       DRAW LANDMARKS
-                    ================================= */
-
-                    drawLandmarks(
-                        data.landmarks ||
-                        []
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Prediction Error:",
-                        error
-                    );
-
-
-                    gestureIcon.textContent =
-                        "⚠️";
-
-
-                    gestureName.textContent =
-                        "Detection Error";
-
-
-                    gestureDescription.textContent =
-                        error.message ||
-                        "Unable to process the camera image.";
-
-
-                    confidenceValue.textContent =
-                        "0%";
-
-
-                    confidenceFill.style.width =
-                        "0%";
-
-
-                    drawLandmarks([]);
-
-
-                } finally {
-
-                    processing = false;
-
-                }
-
-            }
-
-
-            /* =========================================
-               START CAMERA
-            ========================================= */
-
-            async function startCamera() {
-
-                try {
-
-
-                    /*
-                     * Ask browser for camera
-                     */
-
-                    stream =
-                        await navigator
-                            .mediaDevices
-                            .getUserMedia({
-
-                                video: {
-
-                                    facingMode:
-                                        "user",
-
-                                    width: {
-                                        ideal: 1280
-                                    },
-
-                                    height: {
-                                        ideal: 720
-                                    },
-
-                                    frameRate: {
-                                        ideal: 30,
-                                        max: 30
-                                    }
-
-                                },
-
-                                audio: false
-
-                            });
-
-
-                    video.srcObject =
-                        stream;
-
-
-                    await video.play();
-
-
-                    /*
-                     * Hide camera message
-                     */
-
-                    cameraMessage.style.display =
-                        "none";
-
-
-                    /*
-                     * Buttons
-                     */
-
-                    startBtn.disabled =
-                        true;
-
-                    stopBtn.disabled =
-                        false;
-
-
-                    /*
-                     * Camera status
-                     */
-
-                    setStatus(
-                        cameraStatus,
-                        true
-                    );
-
-
-                    resizeCanvas();
-
-
-                    /*
-                     * Wait for video dimensions
-                     */
-
-                    if (
-                        video.readyState >=
-                        HTMLMediaElement.HAVE_METADATA
-                    ) {
-
-                        resizeCanvas();
-
-                    }
-
-
-                    /*
-                     * Clear old interval
-                     */
-
-                    if (
-                        predictionInterval
-                    ) {
-
-                        clearInterval(
-                            predictionInterval
-                        );
-
-                    }
-
-
-                    /*
-                     * Render optimized:
-                     *
-                     * One prediction every 700ms
-                     */
-
-                    predictionInterval =
-                        setInterval(
-                            predict,
-                            PREDICTION_INTERVAL
-                        );
-
-
-                    /*
-                     * First prediction
-                     */
-
-                    setTimeout(
-                        predict,
-                        300
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Camera Error:",
-                        error
-                    );
-
-
-                    cameraMessage.style.display =
-                        "flex";
-
-
-                    gestureIcon.textContent =
-                        "⚠️";
-
-
-                    gestureName.textContent =
-                        "Camera Error";
-
-
-                    gestureDescription.textContent =
-                        error.message ||
-                        "Unable to access camera.";
-
-
-                    setStatus(
-                        cameraStatus,
-                        false
-                    );
-
-                }
-
-            }
-
-
-            /* =========================================
-               STOP CAMERA
-            ========================================= */
-
-            function stopCamera() {
-
-
-                /*
-                 * Stop prediction timer
-                 */
-
-                if (
-                    predictionInterval
-                ) {
-
-                    clearInterval(
-                        predictionInterval
-                    );
-
-                    predictionInterval =
-                        null;
-
-                }
-
-
-                /*
-                 * Stop all camera tracks
-                 */
-
-                if (stream) {
-
-                    stream
-                        .getTracks()
-                        .forEach(
-                            track => {
-                                track.stop();
-                            }
-                        );
-
-                    stream = null;
-
-                }
-
-
-                /*
-                 * Clear video
-                 */
-
-                video.srcObject =
-                    null;
-
-
-                /*
-                 * Clear canvas
-                 */
-
-                ctx.clearRect(
-                    0,
-                    0,
-                    canvas.width,
-                    canvas.height
+            stream
+                .getTracks()
+                .forEach(
+                    track => track.stop()
                 );
 
 
-                /*
-                 * Show camera message
-                 */
+            stream =
+                null;
 
-                cameraMessage.style.display =
-                    "flex";
+        }
 
 
-                /*
-                 * Buttons
-                 */
 
-                startBtn.disabled =
-                    false;
+        // ---------------------------------------------
+        // Clear video
+        // ---------------------------------------------
 
-                stopBtn.disabled =
-                    true;
+        video.srcObject =
+            null;
 
 
-                /*
-                 * Status
-                 */
 
-                setStatus(
-                    cameraStatus,
-                    false
-                );
+        // ---------------------------------------------
+        // Clear canvas
+        // ---------------------------------------------
 
+        ctx.clearRect(
 
-                /*
-                 * Reset result
-                 */
+            0,
+            0,
+            canvas.width,
+            canvas.height
 
-                updateGesture(
-                    "No Hand",
-                    0
-                );
-
-            }
+        );
 
 
-            /* =========================================
-               EVENTS
-            ========================================= */
 
-            startBtn.addEventListener(
-                "click",
-                startCamera
-            );
+        // ---------------------------------------------
+        // UI
+        // ---------------------------------------------
 
-
-            stopBtn.addEventListener(
-                "click",
-                stopCamera
-            );
+        cameraMessage.style.display =
+            "flex";
 
 
-            video.addEventListener(
-                "loadedmetadata",
-                resizeCanvas
-            );
+        cameraMessage.innerHTML =
+
+            '<i class="fa-solid fa-camera"></i>' +
+
+            '<span>' +
+
+            'Click <b>Start Camera</b> to begin recognition.' +
+
+            '</span>';
 
 
-            window.addEventListener(
-                "resize",
-                resizeCanvas
-            );
+        startBtn.disabled =
+            false;
 
 
-            window.addEventListener(
-                "beforeunload",
-                stopCamera
-            );
+        stopBtn.disabled =
+            true;
 
 
-            /* =========================================
-               INITIAL STATUS CHECK
-            ========================================= */
 
-            checkStatus();
+        cameraLiveStatus.innerHTML =
 
-        });
+            '<i class="fa-solid fa-circle"></i>' +
+            ' Camera Inactive';
 
-    </script>
+
+
+        setStatus(
+            "cameraStatus",
+            "Camera Stopped",
+            "normal"
+        );
+
+
+        resetGesture();
+
+    }
+
+
+
+    // =====================================================
+    // BUTTON EVENTS
+    // =====================================================
+
+    startBtn.addEventListener(
+        "click",
+        startCamera
+    );
+
+
+    stopBtn.addEventListener(
+        "click",
+        stopCamera
+    );
+
+
+
+    // =====================================================
+    // WINDOW RESIZE
+    // =====================================================
+
+    window.addEventListener(
+        "resize",
+        resizeCanvas
+    );
+
+
+
+    // =====================================================
+    // PAGE LOAD
+    // =====================================================
+
+    checkBackendStatus();
+
+
+
+    // Refresh backend status every 10 sec
+
+    setInterval(
+        checkBackendStatus,
+        10000
+    );
+
+
+
+    // =====================================================
+    // CLEANUP
+    // =====================================================
+
+    window.addEventListener(
+        "beforeunload",
+        stopCamera
+    );
+
+
+})();
+
+</script>
+
 
 </body>
 
